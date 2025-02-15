@@ -1,6 +1,6 @@
 {
-  "name": "golanghelloworld",
-  "description": "Just a silly hello world project",
+  "name": "gwttr",
+  "description": "Golang wttr.in client",
   "scripts": {
     "commit": "cz",
     "markdown:format": "markdownlint -f",

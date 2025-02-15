@@ -1,4 +1,4 @@
-# Go wttr client
+# Go gwttr client
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/alrayyes/wttr.svg)](https://pkg.go.dev/github.com/alrayyes/wttr)
 [![Go Report Card](https://goreportcard.com/badge/github.com/alrayyes/wttr)](https://goreportcard.com/report/github.com/alrayyes/wttr)
@@ -15,7 +15,7 @@ go install
 ## Usage
 
 ```shell
-./wttr
+./gwttr
 ```
 
 ## Contributing

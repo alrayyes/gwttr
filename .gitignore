@@ -7,7 +7,7 @@
 *.dll
 *.so
 *.dylib
-wttr
+gwttr
 
 # Test binary, built with `golang test.yml -c`
 *.test

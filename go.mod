@@ -1,4 +1,4 @@
-module github.com/alrayyes/wttr
+module github.com/alrayyes/gwttr
 
 go 1.24
 
