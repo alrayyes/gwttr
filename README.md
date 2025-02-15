@@ -9,7 +9,7 @@ A proof of concept client written in Go to access [wttr.in](https://wttr.in/).
 ## Building
 
 ```shell
-go install
+go build
 ```
 
 ## Usage
