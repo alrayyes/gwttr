@@ -1,8 +1,8 @@
 # Go gwttr client
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/alrayyes/wttr.svg)](https://pkg.go.dev/github.com/alrayyes/wttr)
-[![Go Report Card](https://goreportcard.com/badge/github.com/alrayyes/wttr)](https://goreportcard.com/report/github.com/alrayyes/wttr)
-[![codecov](https://codecov.io/gh/alrayyes/wttr/graph/badge.svg?token=LMBZHSBSSD)](https://codecov.io/gh/alrayyes/wttr)
+[![Go Reference](https://pkg.go.dev/badge/github.com/alrayyes/gwttr.svg)](https://pkg.go.dev/github.com/alrayyes/gwttr)
+[![Go Report Card](https://goreportcard.com/badge/github.com/alrayyes/gwttr)](https://goreportcard.com/report/github.com/alrayyes/gwttr)
+[![codecov](https://codecov.io/gh/alrayyes/gwttr/graph/badge.svg?token=LMBZHSBSSD)](https://codecov.io/gh/alrayyes/gwttr)
 
 A proof of concept client written in Go to access [wttr.in](https://wttr.in/).
 
