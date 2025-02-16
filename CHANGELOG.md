@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/alrayyes/gwttr/compare/v1.0.0...v1.1.0) (2025-02-16)
+
+
+### Features
+
+* return the actual weather for Honolulu ([60db99c](https://github.com/alrayyes/gwttr/commit/60db99cccdb48b4601272e4779852754557c8973))
+
 ## 1.0.0 (2025-02-14)
 
 
