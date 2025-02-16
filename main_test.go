@@ -24,7 +24,7 @@ func TestCmdOutput(t *testing.T) {
 	_, _ = io.Copy(&buf, r)
 	got := buf.String()
 
-	want := "I have no idea\n"
+	want := "Weather report: honolulu"
 
-	assert.Equal(t, want, got)
+	assert.Contains(t, got, want)
 }

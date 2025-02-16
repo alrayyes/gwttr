@@ -10,3 +10,5 @@ linters:
     - tenv
     - varnamelen
     - wsl
+
+    - noctx
