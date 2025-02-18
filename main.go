@@ -3,12 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/alrayyes/gwttr/apiclient"
+	"github.com/alrayyes/gwttr/wttrclient"
 	"log"
 )
 
 func main() {
-	client := apiclient.NewAPIClient()
+	client := wttrclient.NewWTTRClient()
 	weather, err := client.GetWeather(context.Background())
 	if err != nil {
 		log.Fatal(err)

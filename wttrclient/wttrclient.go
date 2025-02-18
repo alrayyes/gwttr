@@ -1,4 +1,4 @@
-package apiclient
+package wttrclient
 
 import (
 	"context"
@@ -11,11 +11,13 @@ import (
 const timeout = 10 * time.Second
 const url = "https://wttr.in/honolulu?0A"
 
-type APIClient struct {
+// WTTRClient provides a client to access https://wttr.in
+type WTTRClient struct {
 	client http.Client
 }
 
-func (a *APIClient) GetWeather(ctx context.Context) (string, error) {
+// GetWeather returns the latest weather for Honolulu.
+func (w *WTTRClient) GetWeather(ctx context.Context) (string, error) {
 	req, err := http.NewRequestWithContext(
 		ctx,
 		http.MethodGet,
@@ -26,7 +28,7 @@ func (a *APIClient) GetWeather(ctx context.Context) (string, error) {
 		return "", fmt.Errorf("could not create request: %w", err)
 	}
 
-	resp, err := a.client.Do(req)
+	resp, err := w.client.Do(req)
 	if err != nil {
 		return "", fmt.Errorf("could not do request: %w", err)
 	}
@@ -40,8 +42,9 @@ func (a *APIClient) GetWeather(ctx context.Context) (string, error) {
 	return string(bytes), nil
 }
 
-func NewAPIClient() APIClient {
-	client := APIClient{
+// NewWTTRClient creates a new WTTRClient instance.
+func NewWTTRClient() WTTRClient {
+	client := WTTRClient{
 		client: http.Client{
 			Transport:     nil,
 			CheckRedirect: nil,

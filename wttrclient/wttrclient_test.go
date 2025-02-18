@@ -1,14 +1,14 @@
-package apiclient_test
+package wttrclient_test
 
 import (
-	"github.com/alrayyes/gwttr/apiclient"
+	"github.com/alrayyes/gwttr/wttrclient"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
 
 func TestAPIClient_CanGetTheWeather(t *testing.T) {
-	client := apiclient.NewAPIClient()
+	client := wttrclient.NewWTTRClient()
 	got, err := client.GetWeather(t.Context())
 
 	require.NoError(t, err)
