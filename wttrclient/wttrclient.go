@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-const timeout = 10 * time.Second
+const timeout = 5 * time.Second
 const url = "https://wttr.in/honolulu?0A"
 
 // WTTRClient provides a client to access https://wttr.in
