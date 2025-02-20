@@ -7,9 +7,9 @@ import (
 	"testing"
 )
 
-func TestAPIClient_CanGetTheWeather(t *testing.T) {
+func TestAPIClient_CanGetTheCurrentWeather(t *testing.T) {
 	client := wttrclient.NewWTTRClient()
-	got, err := client.GetWeather(t.Context())
+	got, err := client.CurrentWeather(t.Context())
 
 	require.NoError(t, err)
 

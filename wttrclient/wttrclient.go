@@ -16,8 +16,8 @@ type WTTRClient struct {
 	client http.Client
 }
 
-// GetWeather returns the latest weather for Honolulu.
-func (w *WTTRClient) GetWeather(ctx context.Context) (string, error) {
+// CurrentWeather returns the current weather for Honolulu.
+func (w *WTTRClient) CurrentWeather(ctx context.Context) (string, error) {
 	req, err := http.NewRequestWithContext(
 		ctx,
 		http.MethodGet,
