@@ -1,3 +1,4 @@
+// Package wttrclient provides an api to access https://wttr.in.
 package wttrclient
 
 import (
