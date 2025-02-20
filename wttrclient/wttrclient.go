@@ -47,10 +47,7 @@ func (w *WTTRClient) CurrentWeather(ctx context.Context) (string, error) {
 func NewWTTRClient() WTTRClient {
 	client := WTTRClient{
 		client: http.Client{
-			Transport:     nil,
-			CheckRedirect: nil,
-			Jar:           nil,
-			Timeout:       timeout,
+			Timeout: timeout,
 		},
 	}
 
