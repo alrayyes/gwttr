@@ -1,3 +1,4 @@
+// The gwttr command is a utility that returns the current weather for Honolulu.
 package main
 
 import (
