@@ -1,10 +1,11 @@
 package wttrclient_test
 
 import (
+	"testing"
+
 	"github.com/alrayyes/gwttr/wttrclient"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 func TestAPIClient_CanGetTheCurrentWeather(t *testing.T) {

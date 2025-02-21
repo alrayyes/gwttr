@@ -4,8 +4,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/alrayyes/gwttr/wttrclient"
 	"log"
+
+	"github.com/alrayyes/gwttr/wttrclient"
 )
 
 func main() {

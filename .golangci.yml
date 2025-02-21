@@ -6,7 +6,6 @@ linters:
     - forbidigo
     - gci
     - gofumpt
-    - goimports
     - paralleltest
     - tenv
     - varnamelen
