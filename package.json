@@ -1,38 +1,28 @@
 {
-  "name": "gwttr",
-  "description": "Golang wttr.in client",
-  "scripts": {
-    "commit": "cz",
-    "markdown:format": "markdownlint -f",
-    "markdown:lint": "markdownlint",
-    "prettier:format": "prettier --write --ignore-unknown",
-    "prettier:lint": "prettier --check --ignore-unknown",
-    "prepare": "husky"
-  },
-  "author": "Ryan Kes <ryan@ryankes.eu>",
-  "license": "GPL-3.0-only",
-  "lint-staged": {
-    "**/*": "pnpm prettier:format",
-    "**/*.md": "pnpm markdown:format",
-    "**/Dockerfile": "docker compose run --rm hadolint hadolint",
-    ".husky/commit-msg": "docker compose run --rm shellcheck -x",
-    ".husky/pre-commit": "docker compose run --rm shellcheck -x",
-    ".husky/pre-push": "docker compose run --rm shellcheck -x"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "19.8.1",
-    "@commitlint/config-conventional": "19.8.1",
-    "commitizen": "4.3.1",
-    "cz-conventional-changelog": "3.3.0",
-    "husky": "9.1.7",
-    "lint-staged": "16.1.2",
-    "markdownlint-cli": "0.45.0",
-    "prettier": "3.5.3",
-    "prettier-plugin-sort-json": "4.1.1"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  }
+	"name": "gwttr",
+	"description": "Golang wttr.in client",
+	"scripts": {
+		"commit": "cz",
+		"markdown:format": "markdownlint -f",
+		"markdown:lint": "markdownlint",
+		"prepare": "lefthook install",
+		"lint": "biome check",
+		"lint:fix": "biome check --write"
+	},
+	"author": "Ryan Kes <ryan@ryankes.eu>",
+	"license": "GPL-3.0-only",
+	"devDependencies": {
+		"@biomejs/biome": "^2.0.0",
+		"@commitlint/cli": "19.8.1",
+		"@commitlint/config-conventional": "19.8.1",
+		"commitizen": "4.3.1",
+		"cz-conventional-changelog": "3.3.0",
+		"lefthook": "^1.11.14",
+		"markdownlint-cli": "0.45.0"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	}
 }
