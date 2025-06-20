@@ -17,6 +17,17 @@ type WTTRClient struct {
 	client http.Client
 }
 
+// NewWTTRClient creates a new WTTRClient instance.
+func NewWTTRClient() WTTRClient {
+	client := WTTRClient{
+		client: http.Client{
+			Timeout: timeout,
+		},
+	}
+
+	return client
+}
+
 // CurrentWeather returns the current weather for Honolulu.
 func (w *WTTRClient) CurrentWeather(ctx context.Context) (string, error) {
 	req, err := http.NewRequestWithContext(
@@ -41,15 +52,4 @@ func (w *WTTRClient) CurrentWeather(ctx context.Context) (string, error) {
 	}
 
 	return string(bytes), nil
-}
-
-// NewWTTRClient creates a new WTTRClient instance.
-func NewWTTRClient() WTTRClient {
-	client := WTTRClient{
-		client: http.Client{
-			Timeout: timeout,
-		},
-	}
-
-	return client
 }
