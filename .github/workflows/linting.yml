@@ -3,7 +3,7 @@ on:
   push:
 
 jobs:
-  lint:
+  markdown:
     name: Prettier & markdown linting
     runs-on: ubuntu-22.04
     strategy:
@@ -22,7 +22,16 @@ jobs:
           cache: "pnpm"
       - name: Install dependencies
         run: pnpm install
-      - name: Prettier lint
-        run: pnpm prettier:lint .
       - name: markdown lint
         run: pnpm markdown:lint .
+  biome:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+      - name: Run Biome
+        run: biome ci .

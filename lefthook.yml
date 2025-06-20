@@ -1,0 +1,41 @@
+skip_lfs: true
+
+commit-msg:
+  commands:
+    "lint commit message":
+      run: pnpm commitlint --edit {1}
+
+pre-push:
+  parallel: true
+  jobs:
+    - run: pnpm lint
+    - run: pnpm markdown:lint .
+
+    - run: docker compose run --rm -T hadolint hadolint docker/golang/Dockerfile
+    - run: docker compose run --rm -T hadolint hadolint docker/hadolint/Dockerfile
+
+    - run: go mod download && go build -v ./...
+
+    - run: golangci-lint run
+    - run: go vet ./...
+    - run: go fmt ./...
+    - run: go test -cover ./...
+
+pre-commit:
+  parallel: true
+  jobs:
+    - run: pnpm lint
+    - run: pnpm markdown:lint .
+
+    - run: docker compose run --rm -T hadolint hadolint docker/golang/Dockerfile
+    - run: docker compose run --rm -T hadolint hadolint docker/hadolint/Dockerfile
+
+    - run: go generate ./...
+    - run: go fmt ./...
+
+    - run: go mod download && go build -v ./...
+
+    - run: golangci-lint run
+    - run: go vet ./...
+    - run: go fmt ./...
+    - run: go test -cover ./...
