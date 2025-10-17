@@ -24,7 +24,7 @@ importers:
         specifier: 3.3.0
         version: 3.3.0(@types/node@22.13.1)(typescript@5.7.3)
       lefthook:
-        specifier: ^1.11.14
+        specifier: 1.11.14
         version: 1.11.14
       markdownlint-cli:
         specifier: 0.45.0

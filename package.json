@@ -17,7 +17,7 @@
 		"@commitlint/config-conventional": "19.8.1",
 		"commitizen": "4.3.1",
 		"cz-conventional-changelog": "3.3.0",
-		"lefthook": "^1.11.14",
+		"lefthook": "1.11.14",
 		"markdownlint-cli": "0.45.0"
 	},
 	"config": {
