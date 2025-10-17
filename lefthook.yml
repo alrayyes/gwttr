@@ -8,7 +8,7 @@ commit-msg:
 pre-push:
   parallel: true
   jobs:
-    - run: pnpm lint
+    - run: pnpm lint .
     - run: pnpm markdown:lint .
 
     - run: docker compose run --rm -T hadolint hadolint docker/golang/Dockerfile
@@ -16,26 +16,35 @@ pre-push:
 
     - run: go mod download && go build -v ./...
 
-    - run: golangci-lint run
-    - run: go vet ./...
-    - run: go fmt ./...
+    - run: golangci-lint run ./...
+    - run: golangci-lint fmt ./...
     - run: go test -cover ./...
 
 pre-commit:
   parallel: true
   jobs:
-    - run: pnpm lint
-    - run: pnpm markdown:lint .
+    - run: pnpm lint:fix .
+      glob: "*"
+      stage_fix: true
+    - run: pnpm markdown:format {staged_files}
+      glob: "*.md"
+      stage_fix: true
 
     - run: docker compose run --rm -T hadolint hadolint docker/golang/Dockerfile
     - run: docker compose run --rm -T hadolint hadolint docker/hadolint/Dockerfile
 
     - run: go generate ./...
-    - run: go fmt ./...
+      glob: "*.go"
 
     - run: go mod download && go build -v ./...
+      glob: "*.go"
 
-    - run: golangci-lint run
-    - run: go vet ./...
-    - run: go fmt ./...
+    - run: golangci-lint run --fix ./...
+      glob: "*.go"
+      stage_fix: true
+    - run: golangci-lint fmt ./...
+      glob: "*.go"
+      stage_fix: true
+
     - run: go test -cover ./...
+      glob: "*.go"
