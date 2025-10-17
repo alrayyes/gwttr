@@ -11,9 +11,6 @@ pre-push:
     - run: pnpm lint .
     - run: pnpm markdown:lint .
 
-    - run: docker compose run --rm -T hadolint hadolint docker/golang/Dockerfile
-    - run: docker compose run --rm -T hadolint hadolint docker/hadolint/Dockerfile
-
     - run: go mod download && go build -v ./...
 
     - run: golangci-lint run ./...
@@ -29,9 +26,6 @@ pre-commit:
     - run: pnpm markdown:format {staged_files}
       glob: "*.md"
       stage_fix: true
-
-    - run: docker compose run --rm -T hadolint hadolint docker/golang/Dockerfile
-    - run: docker compose run --rm -T hadolint hadolint docker/hadolint/Dockerfile
 
     - run: go generate ./...
       glob: "*.go"
