@@ -8,7 +8,6 @@ linters:
     - varnamelen
     - wsl
   exclusions:
-    generated: lax
     presets:
       - comments
       - common-false-positives
