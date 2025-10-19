@@ -47,7 +47,10 @@ func (w *WTTRClient) CurrentWeather(ctx context.Context) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("could not do request: %w", err)
 	}
-	defer resp.Body.Close()
+
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	bytes, err := io.ReadAll(resp.Body)
 	if err != nil {
