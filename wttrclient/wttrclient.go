@@ -9,8 +9,10 @@ import (
 	"time"
 )
 
-const timeout = 5 * time.Second
-const url = "https://wttr.in/honolulu?0A"
+const (
+	timeout = 5 * time.Second
+	url     = "https://wttr.in/honolulu?0A"
+)
 
 // WTTRClient provides a client to access https://wttr.in
 type WTTRClient struct {
