@@ -10,6 +10,8 @@ import (
 )
 
 func TestCmdOutput(t *testing.T) {
+	t.Parallel()
+
 	oldStdout := os.Stdout
 
 	r, w, _ := os.Pipe()

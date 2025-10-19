@@ -4,7 +4,6 @@ linters:
   disable:
     - depguard
     - forbidigo
-    - paralleltest
     - varnamelen
     - wsl
 formatters:

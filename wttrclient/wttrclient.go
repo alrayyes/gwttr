@@ -11,26 +11,25 @@ import (
 
 const (
 	timeout = 5 * time.Second
-	url     = "https://wttr.in/honolulu?0A"
 )
 
 // WTTRClient provides a client to access https://wttr.in
 type WTTRClient struct {
 	client http.Client
+	url    string
 }
 
 // NewWTTRClient creates a new WTTRClient instance.
-func NewWTTRClient() WTTRClient {
-	client := WTTRClient{
+func NewWTTRClient(url string) WTTRClient {
+	return WTTRClient{
 		client: http.Client{
 			Transport:     nil,
 			CheckRedirect: nil,
 			Jar:           nil,
 			Timeout:       timeout,
 		},
+		url: url,
 	}
-
-	return client
 }
 
 // CurrentWeather returns the current weather for Honolulu.
@@ -38,7 +37,7 @@ func (w *WTTRClient) CurrentWeather(ctx context.Context) (string, error) {
 	req, err := http.NewRequestWithContext(
 		ctx,
 		http.MethodGet,
-		url,
+		w.url,
 		nil,
 	)
 	if err != nil {
