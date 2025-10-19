@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/alrayyes/gwttr/compare/v1.2.0...v1.2.1) (2025-10-19)
+
+
+### Bug Fixes
+
+* **ci:** use latest golangci-lint version in pipeline ([84278c0](https://github.com/alrayyes/gwttr/commit/84278c0c206c878e11feb1e9b281f5dae169d221))
+
 ## [1.2.0](https://github.com/alrayyes/gwttr/compare/v1.1.0...v1.2.0) (2025-02-18)
 
 
