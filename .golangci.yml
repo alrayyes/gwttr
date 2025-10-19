@@ -15,9 +15,3 @@ formatters:
     - goimports
     - golines
     - swaggo
-  exclusions:
-    generated: lax
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
