@@ -11,6 +11,7 @@ import (
 
 func main() {
 	client := wttrclient.NewWTTRClient()
+
 	weather, err := client.CurrentWeather(context.Background())
 	if err != nil {
 		log.Fatal(err)

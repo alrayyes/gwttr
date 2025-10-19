@@ -22,6 +22,7 @@ func TestCmdOutput(t *testing.T) {
 	os.Stdout = oldStdout
 
 	var buf bytes.Buffer
+
 	_, _ = io.Copy(&buf, r)
 	got := buf.String()
 

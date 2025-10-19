@@ -3,7 +3,6 @@ linters:
   default: all
   disable:
     - depguard
-    - exhaustruct
     - forbidigo
     - paralleltest
     - varnamelen

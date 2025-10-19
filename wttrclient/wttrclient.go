@@ -21,7 +21,10 @@ type WTTRClient struct {
 func NewWTTRClient() WTTRClient {
 	client := WTTRClient{
 		client: http.Client{
-			Timeout: timeout,
+			Transport:     nil,
+			CheckRedirect: nil,
+			Jar:           nil,
+			Timeout:       timeout,
 		},
 	}
 
