@@ -1,8 +1,5 @@
 on:
-  workflow_run:
-    workflows: [ "Build", "Test", "Linting", "golangci-lint" ]
-    types:
-      - completed
+  push:
     branches:
       - main
 
