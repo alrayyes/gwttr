@@ -16,6 +16,6 @@
 		"@commitlint/cli": "20.4.3",
 		"@commitlint/config-conventional": "20.4.3",
 		"lefthook": "2.1.2",
-		"markdownlint-cli": "0.47.0"
+		"markdownlint-cli": "0.48.0"
 	}
 }
