@@ -13,7 +13,7 @@
 	"license": "GPL-3.0-only",
 	"devDependencies": {
 		"@biomejs/biome": "2.5.1",
-		"@commitlint/cli": "21.0.2",
+		"@commitlint/cli": "21.1.0",
 		"@commitlint/config-conventional": "21.1.0",
 		"lefthook": "2.1.9",
 		"markdownlint-cli": "0.49.0"
