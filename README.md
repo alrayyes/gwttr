@@ -10,12 +10,8 @@
 [![Licence](https://img.shields.io/github/license/alrayyes/gwttr)](https://choosealicense.com/licenses/gpl-3.0/)
 
 A proof-of-concept Go client for [wttr.in](https://wttr.in/), the weather
-service you can curl. Run it, and it prints the current conditions for Honolulu
-as coloured ASCII art.
-
-The location is fixed. There's no argument parsing yet, so `gwttr` reports on
-Honolulu and nowhere else. See
-[issue #210](https://github.com/alrayyes/gwttr/issues/210).
+service you can curl. Give it a location, and it prints the current conditions
+there as coloured ASCII art.
 
 ## Requirements
 
@@ -60,6 +56,8 @@ go install github.com/alrayyes/gwttr@latest
 
 ## Usage
 
+With no arguments it reports on Honolulu:
+
 ```shell
 ./gwttr
 ```
@@ -73,6 +71,15 @@ Weather report: honolulu
    /(___(__)  16 km
                0.0 mm
 ```
+
+Give it a location for anywhere else. Quote anything with a space in it:
+
+```shell
+./gwttr berlin
+./gwttr "new york"
+```
+
+`./gwttr --help` lists the flags.
 
 You can use the `wttrclient` package on its own if you just want the forecast as
 a string. The

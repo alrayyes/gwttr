@@ -7,6 +7,17 @@ linters:
     - gomodguard
     - varnamelen
     - wsl
+  settings:
+    exhaustruct:
+      exclude:
+        # cobra.Command has more than thirty fields and is meant to be built
+        # with the handful you need. Listing them all says nothing.
+        - 'github\.com/spf13/cobra\.Command'
+    wrapcheck:
+      ignore-package-globs:
+        # Errors crossing our own package boundaries are already wrapped with
+        # %w where they're raised. wrapcheck is here for third-party ones.
+        - github.com/alrayyes/gwttr/*
 formatters:
   enable:
     - gci

@@ -31,3 +31,27 @@ func TestAPIClient_CanGetTheCurrentWeather(t *testing.T) {
 
 	assert.Contains(t, got, want)
 }
+
+func TestURLFor(t *testing.T) {
+	t.Parallel()
+
+	t.Run("builds the url for a location", func(t *testing.T) {
+		t.Parallel()
+
+		assert.Equal(
+			t,
+			"https://wttr.in/honolulu?0A",
+			wttrclient.URLFor("honolulu"),
+		)
+	})
+
+	t.Run("escapes a location with a space in it", func(t *testing.T) {
+		t.Parallel()
+
+		assert.Equal(
+			t,
+			"https://wttr.in/new%20york?0A",
+			wttrclient.URLFor("new york"),
+		)
+	})
+}
