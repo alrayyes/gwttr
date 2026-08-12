@@ -1,0 +1,26 @@
+# Prettier is here to fill Biome's gaps, which in this repo means Markdown and
+# YAML. Nothing else — the scripts scope it to those extensions and this file is
+# the second lock on that, plus the few files it must not reformat.
+
+node_modules/
+dist/
+
+# release-please writes this file on every release. Formatting it here would
+# put the two tools in a loop, each undoing the other.
+CHANGELOG.md
+
+# Biome leads: every file type it supports is its own. Listing them here keeps
+# a bare `prettier .` from quietly reformatting what Biome has already
+# formatted its own way. Narrow this the day Biome ships Markdown or YAML.
+*.json
+*.jsonc
+*.js
+*.mjs
+*.cjs
+*.ts
+*.mts
+*.cts
+*.jsx
+*.tsx
+*.css
+*.graphql

@@ -1,8 +1,3 @@
-# This is an example .goreleaser.yml file with some sensible defaults.
-# Make sure to check the documentation at https://goreleaser.com
-
-# The lines below are called `modelines`. See `:help modeline`
-# Feel free to remove those if you don't want/need to use them.
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
 # vim: set ts=2 sw=2 tw=0 fo=cnqoj
 
@@ -10,9 +5,7 @@ version: 2
 
 before:
   hooks:
-    # You may remove this if you don't use go modules.
     - go mod tidy
-    # you may remove this if you don't need go generate
     - go generate ./...
 
 builds:
@@ -24,8 +17,9 @@ builds:
       - darwin
 
 archives:
-  - format: tar.gz
-    # this name template makes the OS and Arch compatible with the results of `uname`.
+  - formats: [tar.gz]
+    # Names the OS and architecture the way uname reports them, so the archive
+    # someone downloads matches what they typed to find out which one they need.
     name_template: >-
       {{ .ProjectName }}_
       {{- title .Os }}_
@@ -33,14 +27,13 @@ archives:
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
-    # use zip for windows archives
     format_overrides:
       - goos: windows
-        format: zip
+        formats: [zip]
 
+# release-please has already written the notes and created the release by the
+# time goreleaser runs; all goreleaser does is hang the binaries on it. Left
+# enabled, the release would carry its notes twice — once curated by
+# release-please, once as a raw shortlog.
 changelog:
-  sort: asc
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
+  disable: true

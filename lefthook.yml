@@ -9,12 +9,25 @@ pre-push:
   parallel: true
   jobs:
     - run: bun run lint .
-    - run: bun run markdown:lint .
+
+    # Piped, because Prettier decides the layout and markdownlint then judges
+    # what Prettier produced. The other order has markdownlint reporting on
+    # something Prettier is about to rewrite. Check mode only — nothing under a
+    # push may write.
+    - name: prose and yaml
+      group:
+        piped: true
+        jobs:
+          - run: bun run format:check
+          - run: bun run md:lint
 
     - run: go mod download && go build -v ./...
 
     - run: golangci-lint run ./...
-    - run: golangci-lint fmt ./...
+    # --diff, not the writing form: a hook that rewrites files under a push
+    # leaves the pushed commit and the working tree disagreeing about what was
+    # reviewed.
+    - run: golangci-lint fmt --diff ./...
     - run: go test -cover ./...
 
 pre-commit:
@@ -22,10 +35,15 @@ pre-commit:
   jobs:
     - run: bun run lint:fix .
       glob: "*"
-      stage_fix: true
-    - run: bun run markdown:format {staged_files}
-      glob: "*.md"
-      stage_fix: true
+      stage_fixed: true
+
+    # Same order as pre-push, with Prettier writing rather than checking. The
+    # staged files are named explicitly rather than left to Prettier's own
+    # glob, because stage_fixed only puts back files lefthook handed to the job.
+    - name: prose and yaml
+      glob: "*.{md,yml,yaml}"
+      run: bun run format {staged_files} && bun run md:lint
+      stage_fixed: true
 
     - run: go generate ./...
       glob: "*.go"
@@ -35,10 +53,7 @@ pre-commit:
 
     - run: golangci-lint run --fix ./...
       glob: "*.go"
-      stage_fix: true
+      stage_fixed: true
     - run: golangci-lint fmt ./...
       glob: "*.go"
-      stage_fix: true
-
-    - run: go test -cover ./...
-      glob: "*.go"
+      stage_fixed: true

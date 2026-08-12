@@ -1,0 +1,19 @@
+{
+	"globs": ["**/*.md"],
+	"ignores": ["node_modules/", "dist/", "CHANGELOG.md"],
+	"config": {
+		// Prettier decides layout and runs first, so every rule that has an
+		// opinion about layout comes off here. markdownlint ships that list and
+		// keeps it current, which beats hand-picking rules and re-picking them
+		// every time either tool changes its mind.
+		"extends": "markdownlint/style/prettier",
+
+		// Carried over from the relaxed style this repo used before, so switching
+		// configs doesn't quietly tighten anything.
+		"whitespace": false,
+		"no-inline-html": false,
+		"no-bare-urls": false,
+		"fenced-code-language": false,
+		"first-line-h1": false
+	}
+}
