@@ -1,0 +1,10 @@
+# Prettier is here for Markdown and nothing else — Biome owns every other file
+# type it could touch. The scripts scope it to **/*.md; this file is the second
+# lock on that, plus the Markdown it must not reformat.
+
+node_modules/
+dist/
+
+# release-please writes this file on every release. Formatting it here would
+# put the two tools in a loop, each undoing the other.
+CHANGELOG.md
