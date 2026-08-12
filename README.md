@@ -10,7 +10,7 @@
 [![License](https://img.shields.io/github/license/alrayyes/gwttr)](https://choosealicense.com/licenses/gpl-3.0/)
 
 A proof-of-concept Go client for [wttr.in](https://wttr.in/), the weather
-service you can curl. Run it and it prints the current conditions for Honolulu
+service you can curl. Run it, and it prints the current conditions for Honolulu
 as coloured ASCII art.
 
 The location is fixed. There's no argument parsing yet, so `gwttr` reports on
@@ -26,7 +26,7 @@ macOS gets x86-64 and arm64.
 To build it yourself you need **Go 1.24 or newer**. That's the version in
 `go.mod`, and it's what CI builds with.
 
-To work on it you also need:
+To work on it, you also need:
 
 - **[bun](https://bun.sh/)** for the git hooks and the Markdown, YAML, and JSON
   tooling. Not npm, yarn, or pnpm. The lockfile is `bun.lock`.
@@ -113,7 +113,7 @@ bun run md:lint       # markdownlint
 go test ./...
 ```
 
-The tests never reach the network. Everything that speaks HTTP points at an
+The tests never reach the network. Everything that speaks HTTP points at a local
 `httptest` server instead, so the suite passes on a train.
 
 Work lands through a pull request. Please keep it to one change per pull

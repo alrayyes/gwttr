@@ -1,6 +1,7 @@
 {
+	"ltex.language": "en-GB",
 	"ltex.dictionary": {
-		"en-US": [
+		"en-GB": [
 			"gwttr",
 			"wttr.in",
 			"bun",
@@ -17,10 +18,12 @@
 			"httptest",
 			"lockfile",
 			"arm64",
+			"npm",
+			"yarn",
 			"pnpm"
 		]
 	},
 	"ltex.disabledRules": {
-		"en-US": ["PASSIVE_VOICE"]
+		"en-GB": ["PASSIVE_VOICE", "UPPERCASE_SENTENCE_START"]
 	}
 }
