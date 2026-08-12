@@ -5,6 +5,7 @@
 		"format": "prettier --write",
 		"format:check": "prettier --check \"**/*.{md,yml,yaml}\"",
 		"md:lint": "markdownlint-cli2",
+		"prose": "vale --no-exit --glob='!{styles/**,node_modules/**,CHANGELOG.md}' .",
 		"prepare": "lefthook install",
 		"lint": "biome check",
 		"lint:fix": "biome check --write"

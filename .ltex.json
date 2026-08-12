@@ -1,0 +1,29 @@
+{
+	"ltex.language": "en-GB",
+	"ltex.dictionary": {
+		"en-GB": [
+			"gwttr",
+			"wttr.in",
+			"bun",
+			"bunx",
+			"Biome",
+			"lefthook",
+			"commitlint",
+			"markdownlint",
+			"golangci-lint",
+			"GoReleaser",
+			"release-please",
+			"Dependabot",
+			"Codecov",
+			"httptest",
+			"lockfile",
+			"arm64",
+			"npm",
+			"yarn",
+			"pnpm"
+		]
+	},
+	"ltex.disabledRules": {
+		"en-GB": ["PASSIVE_VOICE", "UPPERCASE_SENTENCE_START"]
+	}
+}

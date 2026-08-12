@@ -4,13 +4,13 @@
 [![Tests](https://github.com/alrayyes/gwttr/actions/workflows/test.yml/badge.svg)](https://github.com/alrayyes/gwttr/actions/workflows/test.yml)
 [![golangci-lint](https://github.com/alrayyes/gwttr/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/alrayyes/gwttr/actions/workflows/golangci-lint.yml)
 [![Linting](https://github.com/alrayyes/gwttr/actions/workflows/linting.yml/badge.svg)](https://github.com/alrayyes/gwttr/actions/workflows/linting.yml)
-[![codecov](https://codecov.io/gh/alrayyes/gwttr/graph/badge.svg?token=LMBZHSBSSD)](https://codecov.io/gh/alrayyes/gwttr)
+[![Codecov](https://codecov.io/gh/alrayyes/gwttr/graph/badge.svg?token=LMBZHSBSSD)](https://codecov.io/gh/alrayyes/gwttr)
 [![Release](https://img.shields.io/github/v/release/alrayyes/gwttr)](https://github.com/alrayyes/gwttr/releases/latest)
 [![Go Reference](https://pkg.go.dev/badge/github.com/alrayyes/gwttr.svg)](https://pkg.go.dev/github.com/alrayyes/gwttr)
-[![License](https://img.shields.io/github/license/alrayyes/gwttr)](https://choosealicense.com/licenses/gpl-3.0/)
+[![Licence](https://img.shields.io/github/license/alrayyes/gwttr)](https://choosealicense.com/licenses/gpl-3.0/)
 
 A proof-of-concept Go client for [wttr.in](https://wttr.in/), the weather
-service you can curl. Run it and it prints the current conditions for Honolulu
+service you can curl. Run it, and it prints the current conditions for Honolulu
 as coloured ASCII art.
 
 The location is fixed. There's no argument parsing yet, so `gwttr` reports on
@@ -26,15 +26,18 @@ macOS gets x86-64 and arm64.
 To build it yourself you need **Go 1.24 or newer**. That's the version in
 `go.mod`, and it's what CI builds with.
 
-To work on it you also need:
+To work on it, you also need:
 
-- **[bun](https://bun.sh/)** for the git hooks and the Markdown, YAML and JSON
-  tooling. Not npm, yarn or pnpm. The lockfile is `bun.lock`.
+- **[bun](https://bun.sh/)** for the git hooks and the Markdown, YAML, and JSON
+  tooling. Not npm, yarn, or pnpm. The lockfile is `bun.lock`.
 - **[golangci-lint](https://golangci-lint.run/) 2.12.2**, which the hooks and CI
   both run. The version is pinned in
   `.github/workflows/golangci-lint.yml`.
+- **[Vale](https://vale.sh/)** for prose style. The pre-commit hook runs it, so
+  a commit touching Markdown needs it on your `PATH`. Run `vale sync` once
+  after cloning to fetch the style packages, which aren't committed.
 
-You only need [goreleaser](https://goreleaser.com/) if you want to reproduce a
+You only need [GoReleaser](https://goreleaser.com/) if you want to reproduce a
 release build locally.
 
 ## Installation
@@ -110,7 +113,7 @@ bun run md:lint       # markdownlint
 go test ./...
 ```
 
-The tests never touch the network. Everything that speaks HTTP points at an
+The tests never reach the network. Everything that speaks HTTP points at a local
 `httptest` server instead, so the suite passes on a train.
 
 Work lands through a pull request. Please keep it to one change per pull
@@ -122,7 +125,7 @@ Nobody picks a version number here.
 [release-please](https://github.com/googleapis/release-please) reads the
 Conventional Commits that land on `main` and keeps a release pull request open
 carrying the next version and the changelog entry. Merging it tags the release.
-[goreleaser](https://goreleaser.com/) then builds that tag, cross-compiles, and
+[GoReleaser](https://goreleaser.com/) then builds that tag, cross-compiles, and
 attaches the archives.
 
 Both steps live in `.github/workflows/release-please.yml`, and they're in the
@@ -133,6 +136,6 @@ symptom is a release with no binaries on it.
 `.release-please-manifest.json` holds the current version. If a release ever
 goes wrong, correct that file rather than the tag.
 
-## License
+## Licence
 
 [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)

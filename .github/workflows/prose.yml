@@ -1,0 +1,78 @@
+name: Prose
+
+on:
+  push:
+
+jobs:
+  # Style. Vale reports and does not fail the build: style advice that blocks a
+  # merge just teaches people to reach for --no-verify.
+  vale:
+    name: style
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Install Vale
+        run: |
+          curl -sSfL "https://github.com/errata-ai/vale/releases/download/v3.17.1/vale_3.17.1_Linux_64-bit.tar.gz" \
+            | tar -xz -C /usr/local/bin vale
+      # The style packages are downloaded rather than committed, so this has to
+      # run before vale itself or there are no rules to check against.
+      - name: Sync style packages
+        run: vale sync
+      # Same command the hooks run, so the two can't disagree about scope.
+      # No bun install needed: the script only shells out to vale.
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.14
+      - name: Run Vale
+        run: bun run prose
+
+  # Mechanics. Grammar and spelling have a right answer, so this one is a gate.
+  ltex:
+    name: grammar
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      # Kept out of the git hooks on purpose: this is a ~200 MB download that
+      # ships its own Java runtime, which is more than a commit should wait on.
+      - name: Install ltex-cli-plus
+        run: |
+          mkdir -p "$HOME/ltex"
+          curl -sSfL "https://github.com/ltex-plus/ltex-ls-plus/releases/download/18.7.0/ltex-ls-plus-18.7.0-linux-x64.tar.gz" \
+            | tar -xz -C "$HOME/ltex"
+          # The archive nests the binary under a versioned directory and lists
+          # everything below a leading "./", so a fixed --strip-components is a
+          # guess. Find it instead, so a change to the layout doesn't silently
+          # break the job.
+          bin="$(dirname "$(find "$HOME/ltex" -type f -name ltex-cli-plus | head -1)")"
+          # The release ships its own JDK 21, and the classes are built for it.
+          # Runners set JAVA_HOME to an older JDK, which the launcher picks up
+          # and then dies with UnsupportedClassVersionError. Point it at the
+          # bundled one, which is the whole reason this archive is self-contained.
+          jdk="$(find "$HOME/ltex" -maxdepth 3 -type d -name 'jdk-*' | head -1)"
+          echo "$bin" >> "$GITHUB_PATH"
+          echo "JAVA_HOME=$jdk" >> "$GITHUB_ENV"
+          # Prove it runs here, so a broken install fails at the install step
+          # rather than looking like a document full of mistakes later on.
+          JAVA_HOME="$jdk" "$bin/ltex-cli-plus" --version
+      # ltex-cli-plus exits 3 on findings, not 1. Testing for a specific code
+      # would pass a failing document, so this checks for any non-zero.
+      - name: Check grammar and spelling
+        run: |
+          set +e
+          ltex-cli-plus --client-configuration=.ltex.json README.md
+          status=$?
+          set -e
+          if [ "$status" -eq 0 ]; then
+            exit 0
+          fi
+          # Any non-zero fails the job, but only 3 means the document has
+          # something wrong with it. Anything else is a broken job, and saying
+          # so stops the next person hunting for a typo that isn't there.
+          if [ "$status" -eq 3 ]; then
+            echo "ltex-cli-plus found grammar or spelling problems" >&2
+          else
+            echo "ltex-cli-plus failed to run (exit $status)" >&2
+          fi
+          exit 1

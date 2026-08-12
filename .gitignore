@@ -27,3 +27,9 @@ go.work.sum
 .env
 
 dist/
+
+# Vale's style packages are downloaded, not committed: `vale sync` fetches
+# these two. Ignored by name rather than ignoring styles/ wholesale, which
+# would take the House vocabulary with them.
+styles/Google/
+styles/proselint/
