@@ -40,8 +40,17 @@ jobs:
         run: |
           mkdir -p "$HOME/ltex"
           curl -sSfL "https://github.com/ltex-plus/ltex-ls-plus/releases/download/18.7.0/ltex-ls-plus-18.7.0-linux-x64.tar.gz" \
-            | tar -xz -C "$HOME/ltex" --strip-components=1
-          echo "$HOME/ltex/bin" >> "$GITHUB_PATH"
+            | tar -xz -C "$HOME/ltex"
+          # The archive nests the binary under a versioned directory and lists
+          # everything below a leading "./", so a fixed --strip-components is a
+          # guess. Find it instead, and fail here rather than at the next step
+          # if the layout ever moves.
+          bin="$(dirname "$(find "$HOME/ltex" -type f -name ltex-cli-plus | head -1)")"
+          if [ ! -x "$bin/ltex-cli-plus" ]; then
+            echo "ltex-cli-plus not found under $HOME/ltex" >&2
+            exit 1
+          fi
+          echo "$bin" >> "$GITHUB_PATH"
       # ltex-cli-plus exits 3 on findings, not 1. Testing for a specific code
       # would pass a failing document, so this checks for any non-zero.
       - name: Check grammar and spelling
@@ -50,7 +59,14 @@ jobs:
           ltex-cli-plus --client-configuration=.ltex.json README.md
           status=$?
           set -e
-          if [ "$status" -ne 0 ]; then
-            echo "ltex-cli-plus reported findings (exit $status)"
-            exit 1
+          if [ "$status" -eq 0 ]; then
+            exit 0
           fi
+          # 127 means the binary went missing, which is a broken job rather
+          # than a document with mistakes in it. Say which.
+          if [ "$status" -eq 127 ]; then
+            echo "ltex-cli-plus could not be run" >&2
+          else
+            echo "ltex-cli-plus reported findings (exit $status)" >&2
+          fi
+          exit 1
