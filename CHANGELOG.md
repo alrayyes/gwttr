@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/alrayyes/gwttr/compare/v1.2.3...v1.3.0) (2026-08-12)
+
+
+### Features
+
+* take the location as an argument ([f4a1617](https://github.com/alrayyes/gwttr/commit/f4a16173f3ee77120dc327bfe0373ba0d1ca1f30))
+* take the location as an argument ([e672908](https://github.com/alrayyes/gwttr/commit/e67290819a6380a0396769a3b73fa69ba6c7671f)), closes [#210](https://github.com/alrayyes/gwttr/issues/210)
+
 ## [1.2.3](https://github.com/alrayyes/gwttr/compare/v1.2.2...v1.2.3) (2026-08-12)
 
 
