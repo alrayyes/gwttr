@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.2](https://github.com/alrayyes/gwttr/compare/v1.2.1...v1.2.2) (2026-08-12)
+
+
+### Bug Fixes
+
+* remove duplicate with block in build.yml ([911dde0](https://github.com/alrayyes/gwttr/commit/911dde00522adb11c9d9ef742f29016e158f0102))
+* remove duplicate with block in build.yml ([3e7e2ca](https://github.com/alrayyes/gwttr/commit/3e7e2caddf0ac8af00b5fed6b8afacd4a73c13d2))
+
 ## [1.2.1](https://github.com/alrayyes/gwttr/compare/v1.2.0...v1.2.1) (2026-08-12)
 
 
