@@ -2,8 +2,8 @@
 	"name": "gwttr",
 	"description": "Golang wttr.in client",
 	"scripts": {
-		"md:format": "prettier --write",
-		"md:check": "prettier --check \"**/*.md\"",
+		"format": "prettier --write",
+		"format:check": "prettier --check \"**/*.{md,yml,yaml}\"",
 		"md:lint": "markdownlint-cli2",
 		"prepare": "lefthook install",
 		"lint": "biome check",
