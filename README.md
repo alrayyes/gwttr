@@ -79,7 +79,8 @@ Give it a location for anywhere else. Quote anything with a space in it:
 ./gwttr "new york"
 ```
 
-`./gwttr --help` lists the flags.
+`./gwttr --help` lists the flags, and `./gwttr --version` reports the release
+you're running.
 
 You can use the `wttrclient` package on its own if you just want the forecast as
 a string. The
