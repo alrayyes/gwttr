@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.3](https://github.com/alrayyes/gwttr/compare/v1.2.2...v1.2.3) (2026-08-12)
+
+
+### Bug Fixes
+
+* check the prose as British English ([f0e74db](https://github.com/alrayyes/gwttr/commit/f0e74db87750589d9aa334c8066516b56dc75f0e))
+* remove the release that never happened ([cea2f0c](https://github.com/alrayyes/gwttr/commit/cea2f0c6a7c4a05cf9383bc219284b7c8e11b833))
+* remove the release that never happened ([f535e54](https://github.com/alrayyes/gwttr/commit/f535e54bec2977f14dec8898596a0885c10ff217)), closes [#231](https://github.com/alrayyes/gwttr/issues/231)
+* run ltex against its own bundled jdk ([eed5b6b](https://github.com/alrayyes/gwttr/commit/eed5b6b7293c55b8112e4185351492dd8be1ffa9))
+
 ## [1.2.2](https://github.com/alrayyes/gwttr/compare/v1.2.1...v1.2.2) (2026-08-12)
 
 
