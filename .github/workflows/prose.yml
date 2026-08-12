@@ -38,9 +38,10 @@ jobs:
       # ships its own Java runtime, which is more than a commit should wait on.
       - name: Install ltex-cli-plus
         run: |
+          mkdir -p "$HOME/ltex"
           curl -sSfL "https://github.com/ltex-plus/ltex-ls-plus/releases/download/18.7.0/ltex-ls-plus-18.7.0-linux-x64.tar.gz" \
-            | tar -xz -C /opt
-          echo "/opt/ltex-ls-plus-18.7.0/bin" >> "$GITHUB_PATH"
+            | tar -xz -C "$HOME/ltex" --strip-components=1
+          echo "$HOME/ltex/bin" >> "$GITHUB_PATH"
       # ltex-cli-plus exits 3 on findings, not 1. Testing for a specific code
       # would pass a failing document, so this checks for any non-zero.
       - name: Check grammar and spelling
