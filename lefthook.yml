@@ -22,10 +22,10 @@ pre-commit:
   jobs:
     - run: bun run lint:fix .
       glob: "*"
-      stage_fix: true
+      stage_fixed: true
     - run: bun run markdown:format {staged_files}
       glob: "*.md"
-      stage_fix: true
+      stage_fixed: true
 
     - run: go generate ./...
       glob: "*.go"
@@ -35,10 +35,10 @@ pre-commit:
 
     - run: golangci-lint run --fix ./...
       glob: "*.go"
-      stage_fix: true
+      stage_fixed: true
     - run: golangci-lint fmt ./...
       glob: "*.go"
-      stage_fix: true
+      stage_fixed: true
 
     - run: go test -cover ./...
       glob: "*.go"
