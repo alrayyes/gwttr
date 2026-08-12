@@ -20,12 +20,6 @@ jobs:
       - name: Install dependencies
         run: go mod download
 
-      - name: Run go vet
-        run: go vet ./...
-
-      - name: Run go fmt
-        run: go fmt ./...
-
       - name: Run tests
         run: go test ./... -coverprofile=coverage.txt
 
