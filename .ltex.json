@@ -1,0 +1,26 @@
+{
+	"ltex.dictionary": {
+		"en-US": [
+			"gwttr",
+			"wttr.in",
+			"bun",
+			"bunx",
+			"Biome",
+			"lefthook",
+			"commitlint",
+			"markdownlint",
+			"golangci-lint",
+			"GoReleaser",
+			"release-please",
+			"Dependabot",
+			"Codecov",
+			"httptest",
+			"lockfile",
+			"arm64",
+			"pnpm"
+		]
+	},
+	"ltex.disabledRules": {
+		"en-US": ["PASSIVE_VOICE"]
+	}
+}

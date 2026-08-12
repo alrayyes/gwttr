@@ -20,6 +20,10 @@ pre-push:
         jobs:
           - run: bun run format:check
           - run: bun run md:lint
+          # Reports only. Style is advice, and advice that fails a push is how
+          # people learn to reach for --no-verify. LTeX is the tier that gates,
+          # and it runs in CI.
+          - run: bun run prose
 
     - run: go mod download && go build -v ./...
 
@@ -42,7 +46,7 @@ pre-commit:
     # glob, because stage_fixed only puts back files lefthook handed to the job.
     - name: prose and yaml
       glob: "*.{md,yml,yaml}"
-      run: bun run format {staged_files} && bun run md:lint
+      run: bun run format {staged_files} && bun run md:lint && bun run prose
       stage_fixed: true
 
     - run: go generate ./...
