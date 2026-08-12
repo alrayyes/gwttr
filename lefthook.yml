@@ -28,6 +28,8 @@ pre-push:
     # leaves the pushed commit and the working tree disagreeing about what was
     # reviewed.
     - run: golangci-lint fmt --diff ./...
+    # No -race here. The detector is slow enough that it would make every push
+    # wait, so CI runs it instead. See .github/workflows/test.yml.
     - run: go test -cover ./...
 
 pre-commit:
