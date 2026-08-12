@@ -7,7 +7,6 @@
 [![codecov](https://codecov.io/gh/alrayyes/gwttr/graph/badge.svg?token=LMBZHSBSSD)](https://codecov.io/gh/alrayyes/gwttr)
 [![Release](https://img.shields.io/github/v/release/alrayyes/gwttr)](https://github.com/alrayyes/gwttr/releases/latest)
 [![Go Reference](https://pkg.go.dev/badge/github.com/alrayyes/gwttr.svg)](https://pkg.go.dev/github.com/alrayyes/gwttr)
-[![Go Report Card](https://goreportcard.com/badge/github.com/alrayyes/gwttr)](https://goreportcard.com/report/github.com/alrayyes/gwttr)
 [![License](https://img.shields.io/github/license/alrayyes/gwttr)](https://choosealicense.com/licenses/gpl-3.0/)
 
 A proof-of-concept Go client for [wttr.in](https://wttr.in/), the weather
