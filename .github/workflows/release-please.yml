@@ -1,3 +1,5 @@
+name: release-please
+
 on:
   push:
     branches:
@@ -7,13 +9,48 @@ permissions:
   contents: write
   pull-requests: write
 
-name: release-please
-
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
+      # The token is a PAT rather than the default GITHUB_TOKEN so that the
+      # release pull request this opens actually runs the build, test and lint
+      # workflows. Events raised by GITHUB_TOKEN start no further workflow, so
+      # with it the release pull request would sit there untested.
       - uses: googleapis/release-please-action@v5.0.0
+        id: release
         with:
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
-          release-type: go
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  # goreleaser lives in this workflow rather than in one triggered by the tag.
+  # release-please creates the tag as part of the job above, and a tag pushed
+  # from inside a workflow cannot be relied on to start another one, so an
+  # on-tag workflow fails silently and the first symptom is a release with no
+  # binaries attached to it.
+  goreleaser:
+    needs: release-please
+    if: needs.release-please.outputs.release_created == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the tag release-please just created
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.release-please.outputs.tag_name }}
+          fetch-depth: 0
+      - name: Set up Go
+        uses: actions/setup-go@v6.5.0
+        with:
+          go-version-file: go.mod
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v7.2.3
+        with:
+          distribution: goreleaser
+          version: "~> v2"
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
