@@ -1,6 +1,13 @@
 {
 	"globs": ["**/*.md"],
-	"ignores": ["node_modules/", "dist/", "CHANGELOG.md"],
+	"ignores": [
+		"node_modules/",
+		"dist/",
+		"CHANGELOG.md",
+		// Vale style packages, downloaded rather than committed.
+		"styles/Google/",
+		"styles/proselint/"
+	],
 	"config": {
 		// Prettier decides layout and runs first, so every rule that has an
 		// opinion about layout comes off here. markdownlint ships that list and

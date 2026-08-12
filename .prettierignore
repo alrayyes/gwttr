@@ -5,6 +5,12 @@
 node_modules/
 dist/
 
+# Vale's style packages, fetched by `vale sync` rather than committed. Named
+# individually rather than ignoring styles/ wholesale, so anything we write
+# ourselves under styles/ still gets formatted.
+styles/Google/
+styles/proselint/
+
 # release-please writes this file on every release. Formatting it here would
 # put the two tools in a loop, each undoing the other.
 CHANGELOG.md
