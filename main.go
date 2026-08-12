@@ -13,6 +13,11 @@ import (
 
 const defaultLocation = "honolulu"
 
+// version is set at build time by goreleaser's default ldflags, which pass
+// -X main.version=<tag>. A build that isn't a release says so rather than
+// claiming a version it hasn't got.
+var version = "dev"
+
 func main() {
 	cmd := &cobra.Command{
 		Use:   "gwttr [location]",
@@ -22,6 +27,7 @@ func main() {
 			defaultLocation + ".",
 		Args:         cobra.MaximumNArgs(1),
 		SilenceUsage: true,
+		Version:      version,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			location := defaultLocation
 			if len(args) == 1 {
