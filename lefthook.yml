@@ -3,13 +3,13 @@ skip_lfs: true
 commit-msg:
   commands:
     "lint commit message":
-      run: pnpm commitlint --edit {1}
+      run: bunx commitlint --edit {1}
 
 pre-push:
   parallel: true
   jobs:
-    - run: pnpm lint .
-    - run: pnpm markdown:lint .
+    - run: bun run lint .
+    - run: bun run markdown:lint .
 
     - run: go mod download && go build -v ./...
 
@@ -20,10 +20,10 @@ pre-push:
 pre-commit:
   parallel: true
   jobs:
-    - run: pnpm lint:fix .
+    - run: bun run lint:fix .
       glob: "*"
       stage_fix: true
-    - run: pnpm markdown:format {staged_files}
+    - run: bun run markdown:format {staged_files}
       glob: "*.md"
       stage_fix: true
 

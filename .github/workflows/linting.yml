@@ -4,26 +4,18 @@ on:
 
 jobs:
   markdown:
-    name: Prettier & markdown linting
+    name: markdown linting
     runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        node-version: [23]
     steps:
       - uses: actions/checkout@v7
-      - name: Install pnpm
-        uses: pnpm/action-setup@v6.0.10
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          version: 10
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v7.0.0
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+          bun-version: 1.3.14
       - name: Install dependencies
-        run: pnpm install
+        run: bun install --frozen-lockfile
       - name: markdown lint
-        run: pnpm markdown:lint .
+        run: bun run markdown:lint .
   biome:
     runs-on: ubuntu-22.04
     steps:

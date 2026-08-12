@@ -2,7 +2,6 @@
 	"name": "gwttr",
 	"description": "Golang wttr.in client",
 	"scripts": {
-		"commit": "cz",
 		"markdown:format": "markdownlint -f",
 		"markdown:lint": "markdownlint",
 		"prepare": "lefthook install",
@@ -11,6 +10,9 @@
 	},
 	"author": "Ryan Kes <ryan@ryankes.eu>",
 	"license": "GPL-3.0-only",
+	"trustedDependencies": [
+		"lefthook"
+	],
 	"devDependencies": {
 		"@biomejs/biome": "2.5.7",
 		"@commitlint/cli": "21.2.1",
