@@ -6,12 +6,25 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"time"
 )
 
 const (
 	timeout = 5 * time.Second
+
+	// baseURL is wttr.in. The ?0A query asks for the current conditions only,
+	// in ANSI colour rather than the terminal-sniffed default.
+	baseURL = "https://wttr.in"
+	query   = "?0A"
 )
+
+// URLFor returns the wttr.in URL reporting on location. The location is
+// escaped, so a place with a space in its name works without the caller
+// thinking about it.
+func URLFor(location string) string {
+	return baseURL + "/" + url.PathEscape(location) + query
+}
 
 // WTTRClient provides a client to access https://wttr.in
 type WTTRClient struct {
