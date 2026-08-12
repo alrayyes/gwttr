@@ -3,9 +3,10 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
+	"os"
 
+	"github.com/alrayyes/gwttr/weather"
 	"github.com/alrayyes/gwttr/wttrclient"
 )
 
@@ -14,10 +15,8 @@ const url = "https://wttr.in/honolulu?0A"
 func main() {
 	client := wttrclient.NewWTTRClient(url)
 
-	weather, err := client.CurrentWeather(context.Background())
+	err := weather.Report(context.Background(), &client, os.Stdout)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	fmt.Println(weather)
 }
