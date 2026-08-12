@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/alrayyes/gwttr/compare/v1.3.0...v1.4.0) (2026-08-12)
+
+
+### Features
+
+* report the version ([ad4088e](https://github.com/alrayyes/gwttr/commit/ad4088e9ac1b4fdc20c3c2bc318ef525dbd2a9df))
+* report the version ([1819985](https://github.com/alrayyes/gwttr/commit/181998580652fa4ff22face34cbf2a8c6f212adc))
+
 ## [1.3.0](https://github.com/alrayyes/gwttr/compare/v1.2.3...v1.3.0) (2026-08-12)
 
 
