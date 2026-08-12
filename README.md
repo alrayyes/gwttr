@@ -7,7 +7,7 @@
 [![Codecov](https://codecov.io/gh/alrayyes/gwttr/graph/badge.svg?token=LMBZHSBSSD)](https://codecov.io/gh/alrayyes/gwttr)
 [![Release](https://img.shields.io/github/v/release/alrayyes/gwttr)](https://github.com/alrayyes/gwttr/releases/latest)
 [![Go Reference](https://pkg.go.dev/badge/github.com/alrayyes/gwttr.svg)](https://pkg.go.dev/github.com/alrayyes/gwttr)
-[![License](https://img.shields.io/github/license/alrayyes/gwttr)](https://choosealicense.com/licenses/gpl-3.0/)
+[![Licence](https://img.shields.io/github/license/alrayyes/gwttr)](https://choosealicense.com/licenses/gpl-3.0/)
 
 A proof-of-concept Go client for [wttr.in](https://wttr.in/), the weather
 service you can curl. Run it, and it prints the current conditions for Honolulu
@@ -136,6 +136,6 @@ symptom is a release with no binaries on it.
 `.release-please-manifest.json` holds the current version. If a release ever
 goes wrong, correct that file rather than the tag.
 
-## License
+## Licence
 
 [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
