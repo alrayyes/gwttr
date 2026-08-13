@@ -16,6 +16,14 @@ jobs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
+      # This repo rebases pull requests rather than merging them, and that is a
+      # requirement rather than a preference. GitHub writes the pull request
+      # title into the body of a merge commit, release-please reads conventional
+      # commits out of a commit body as well as its subject, and so every change
+      # landed by a merge commit was listed twice in the changelog. Merge commits
+      # are switched off in the repository settings; no combination of GitHub's
+      # merge commit settings leaves that body empty.
+      #
       # The token is a PAT rather than the default GITHUB_TOKEN so that the
       # release pull request this opens actually runs the build, test and lint
       # workflows. Events raised by GITHUB_TOKEN start no further workflow, so
