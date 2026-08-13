@@ -5,7 +5,6 @@
 
 ### Features
 
-* report the version ([ad4088e](https://github.com/alrayyes/gwttr/commit/ad4088e9ac1b4fdc20c3c2bc318ef525dbd2a9df))
 * report the version ([1819985](https://github.com/alrayyes/gwttr/commit/181998580652fa4ff22face34cbf2a8c6f212adc))
 
 ## [1.3.0](https://github.com/alrayyes/gwttr/compare/v1.2.3...v1.3.0) (2026-08-12)
@@ -13,7 +12,6 @@
 
 ### Features
 
-* take the location as an argument ([f4a1617](https://github.com/alrayyes/gwttr/commit/f4a16173f3ee77120dc327bfe0373ba0d1ca1f30))
 * take the location as an argument ([e672908](https://github.com/alrayyes/gwttr/commit/e67290819a6380a0396769a3b73fa69ba6c7671f)), closes [#210](https://github.com/alrayyes/gwttr/issues/210)
 
 ## [1.2.3](https://github.com/alrayyes/gwttr/compare/v1.2.2...v1.2.3) (2026-08-12)
@@ -22,7 +20,6 @@
 ### Bug Fixes
 
 * check the prose as British English ([f0e74db](https://github.com/alrayyes/gwttr/commit/f0e74db87750589d9aa334c8066516b56dc75f0e))
-* remove the release that never happened ([cea2f0c](https://github.com/alrayyes/gwttr/commit/cea2f0c6a7c4a05cf9383bc219284b7c8e11b833))
 * remove the release that never happened ([f535e54](https://github.com/alrayyes/gwttr/commit/f535e54bec2977f14dec8898596a0885c10ff217)), closes [#231](https://github.com/alrayyes/gwttr/issues/231)
 * run ltex against its own bundled jdk ([eed5b6b](https://github.com/alrayyes/gwttr/commit/eed5b6b7293c55b8112e4185351492dd8be1ffa9))
 
