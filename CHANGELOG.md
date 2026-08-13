@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/alrayyes/gwttr/compare/v1.4.0...v1.4.1) (2026-08-13)
+
+
+### Bug Fixes
+
+* let biome read the gitignore ([7a7fee8](https://github.com/alrayyes/gwttr/commit/7a7fee8bcd51a50f26e278e9903b0413e6d79010)), closes [#246](https://github.com/alrayyes/gwttr/issues/246)
+
 ## [1.4.0](https://github.com/alrayyes/gwttr/compare/v1.3.0...v1.4.0) (2026-08-12)
 
 
