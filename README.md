@@ -34,13 +34,13 @@ it, and put the `gwttr` binary somewhere on your `PATH`.
 Or build from source:
 
 ```shell
-go build
+go build ./cmd/gwttr
 ```
 
 Or install it straight into your Go bin directory:
 
 ```shell
-go install github.com/alrayyes/gwttr@latest
+go install github.com/alrayyes/gwttr/cmd/gwttr@latest
 ```
 
 ## Usage
@@ -71,10 +71,9 @@ Give it a location for anywhere else. Quote anything with a space in it:
 `./gwttr --help` lists the flags, and `./gwttr --version` reports the release
 you're running.
 
-You can use the `wttrclient` package on its own if you just want the forecast as
-a string. The
-[reference](https://pkg.go.dev/github.com/alrayyes/gwttr/wttrclient) has a
-runnable example.
+This is a command, not a library. The packages behind it live under `internal/`,
+so they're documented for whoever works on the repo rather than published for
+anyone to import.
 
 ## Contributing
 

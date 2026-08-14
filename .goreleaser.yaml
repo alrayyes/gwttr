@@ -9,7 +9,12 @@ before:
     - go generate ./...
 
 builds:
-  - env:
+  # The main package sits under cmd/gwttr rather than at the repository root,
+  # so goreleaser's default of "." finds nothing to build. The binary is still
+  # named after the project rather than the directory, which is why the
+  # archives below are unchanged.
+  - main: ./cmd/gwttr
+    env:
       - CGO_ENABLED=0
     goos:
       - linux

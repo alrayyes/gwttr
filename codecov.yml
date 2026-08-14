@@ -1,8 +1,8 @@
-# main.go is the composition root. It builds a client, hands it to
+# cmd/gwttr/main.go is the composition root. It builds a client, hands it to
 # weather.Report and exits, so there's no behaviour in it to assert that the
 # weather and wttrclient tests don't already cover. The only way to execute it
 # from a test was the live call to wttr.in that this package was extracted to
 # get rid of, so measuring it here would just push the number back up without
 # testing anything.
 ignore:
-  - "main.go"
+  - "cmd/gwttr/main.go"
