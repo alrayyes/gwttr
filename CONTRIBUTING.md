@@ -83,6 +83,17 @@ The tests never reach the network. Everything that speaks HTTP points at a local
 Work lands through a pull request. Please keep it to one change per pull
 request. That's the difference between a review and a rubber stamp.
 
+Label it, and label the issue it closes. Two labels answer it: a kind, and the
+area it touches. The kind falls out of the commit prefix. `fix:` is `bug`,
+`feat:` is `enhancement`, `docs:` is `documentation`, `refactor:` is `refactor`.
+The area is usually `go` or `github_actions`. `gh label list` is the whole set,
+and `gh pr edit <number> -l <label>` puts one on something already open.
+
+Only add a new label when nothing in the set fits. Say so on the pull request,
+and make it one you'd reach for again. A taxonomy invented per ticket is a
+filter nobody can use. Leave `dependencies`, `autorelease: pending` and
+`autorelease: tagged` alone. Dependabot and release-please own those.
+
 ## Releases
 
 Nobody picks a version number here.
