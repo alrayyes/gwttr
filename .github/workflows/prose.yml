@@ -61,7 +61,7 @@ jobs:
       - name: Check grammar and spelling
         run: |
           set +e
-          ltex-cli-plus --client-configuration=.ltex.json README.md
+          ltex-cli-plus --client-configuration=.ltex.json README.md CONTRIBUTING.md
           status=$?
           set -e
           if [ "$status" -eq 0 ]; then
