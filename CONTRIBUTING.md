@@ -28,6 +28,23 @@ bun install
 That installs the git hooks too. `bun install` runs `lefthook install` through
 the `prepare` script, so there's no separate setup step to forget.
 
+## Layout
+
+```text
+cmd/gwttr/           the command, and nothing but wiring
+internal/weather/    what a report is and where it gets written
+internal/wttrclient/ the client for wttr.in
+```
+
+`internal/` is deliberate. Nothing here is meant to be imported from another
+module, and the compiler enforcing that is worth more than a paragraph asking
+politely. It also leaves both packages free to change shape without breaking
+someone.
+
+`weather` declares the `Source` interface it consumes rather than importing
+`wttrclient`, so the dependency points inwards. Swapping wttr.in for another
+service means writing another `Source`, not touching `Report`.
+
 ## The hooks
 
 - **pre-commit** formats what it can and stages the result. Biome writes JSON,

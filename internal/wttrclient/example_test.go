@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	"github.com/alrayyes/gwttr/wttrclient"
+	"github.com/alrayyes/gwttr/internal/wttrclient"
 )
 
 // A local test server stands in for wttr.in here. Pointing the example at the

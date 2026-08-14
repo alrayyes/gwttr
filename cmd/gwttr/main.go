@@ -6,8 +6,8 @@ import (
 	"io"
 	"os"
 
-	"github.com/alrayyes/gwttr/weather"
-	"github.com/alrayyes/gwttr/wttrclient"
+	"github.com/alrayyes/gwttr/internal/weather"
+	"github.com/alrayyes/gwttr/internal/wttrclient"
 	"github.com/spf13/cobra"
 )
 
