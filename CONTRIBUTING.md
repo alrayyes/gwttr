@@ -61,6 +61,11 @@ CI runs the same commands, so a green hook should mean a green pipeline. The one
 check that isn't in a hook is LTeX, the grammar tier, which runs in
 [`prose.yml`](.github/workflows/prose.yml).
 
+Every workflow fires on a pull request and on a push to `main`, and nowhere
+else, so each check runs once rather than once per event. A branch pushed with
+no pull request open gets nothing from CI. By then the hooks have run everything
+but LTeX, and nothing merges without a pull request anyway.
+
 You can run any of them by hand:
 
 ```shell
