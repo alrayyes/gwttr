@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/alrayyes/gwttr/compare/v1.4.1...v1.4.2) (2026-09-02)
+
+
+### Bug Fixes
+
+* **ci:** gate Dependabot auto-merge on patch/minor only ([0167430](https://github.com/alrayyes/gwttr/commit/0167430f0e3cc1f18f9410a03877451087ad0604)), closes [#267](https://github.com/alrayyes/gwttr/issues/267)
+
 ## [1.4.1](https://github.com/alrayyes/gwttr/compare/v1.4.0...v1.4.1) (2026-08-13)
 
 
