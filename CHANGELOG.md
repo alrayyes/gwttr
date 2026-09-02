@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/alrayyes/gwttr/compare/v1.4.2...v1.4.3) (2026-09-02)
+
+
+### Bug Fixes
+
+* **ci:** release-auto-merge uses --rebase, matching this repo's settings ([5dc697f](https://github.com/alrayyes/gwttr/commit/5dc697fba74f8333b34d0bc7ef7d8e66c2f5a08e)), closes [#270](https://github.com/alrayyes/gwttr/issues/270)
+
 ## [1.4.2](https://github.com/alrayyes/gwttr/compare/v1.4.1...v1.4.2) (2026-09-02)
 
 
