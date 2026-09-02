@@ -28,8 +28,12 @@ jobs:
       # recursive runs), which would otherwise leave this repo's own
       # release workflow's `push` trigger never firing after an
       # auto-merged release PR lands on main.
+      # --rebase, not --squash: this repo only allows rebase merges
+      # (Settings -> General -> Pull Requests) -- squash fails outright
+      # with "Merge method squash merging is not allowed on this
+      # repository", confirmed live on #269.
       - name: Enable auto-merge
-        run: gh pr merge --auto --squash "$PR_URL"
+        run: gh pr merge --auto --rebase "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
