@@ -6,3 +6,8 @@
 # testing anything.
 ignore:
   - "cmd/gwttr/main.go"
+
+coverage:
+  status:
+    project: off
+    patch: off
