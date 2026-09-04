@@ -24,7 +24,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Install Vale
         run: |
-          curl -sSfL "https://github.com/errata-ai/vale/releases/download/v3.17.1/vale_3.17.1_Linux_64-bit.tar.gz" \
+          curl -sSfL --retry 3 --retry-connrefused --retry-delay 5 \
+            "https://github.com/errata-ai/vale/releases/download/v3.17.1/vale_3.17.1_Linux_64-bit.tar.gz" \
             | tar -xz -C /usr/local/bin vale
       # The style packages are downloaded rather than committed, so this has to
       # run before vale itself or there are no rules to check against.
@@ -51,7 +52,8 @@ jobs:
       - name: Install ltex-cli-plus
         run: |
           mkdir -p "$HOME/ltex"
-          curl -sSfL "https://github.com/ltex-plus/ltex-ls-plus/releases/download/18.7.0/ltex-ls-plus-18.7.0-linux-x64.tar.gz" \
+          curl -sSfL --retry 3 --retry-connrefused --retry-delay 5 \
+            "https://github.com/ltex-plus/ltex-ls-plus/releases/download/18.7.0/ltex-ls-plus-18.7.0-linux-x64.tar.gz" \
             | tar -xz -C "$HOME/ltex"
           # The archive nests the binary under a versioned directory and lists
           # everything below a leading "./", so a fixed --strip-components is a
