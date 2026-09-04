@@ -19,6 +19,7 @@ jobs:
   vale:
     name: style
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Install Vale
@@ -42,6 +43,7 @@ jobs:
   ltex:
     name: grammar
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # Kept out of the git hooks on purpose: this is a ~200 MB download that
