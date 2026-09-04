@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.4](https://github.com/alrayyes/gwttr/compare/v1.4.3...v1.4.4) (2026-09-04)
+
+
+### Bug Fixes
+
+* **ci:** retry the Vale and ltex-cli-plus release downloads in prose.yml ([803b3e0](https://github.com/alrayyes/gwttr/commit/803b3e0234bb6c42e5e233a02ff4220c92003f27)), closes [#278](https://github.com/alrayyes/gwttr/issues/278)
+
 ## [1.4.3](https://github.com/alrayyes/gwttr/compare/v1.4.2...v1.4.3) (2026-09-02)
 
 
