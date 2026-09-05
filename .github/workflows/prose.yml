@@ -41,41 +41,28 @@ jobs:
         run: bun run prose
 
   # Mechanics. Grammar and spelling have a right answer, so this one is a gate.
+  # ghcr.io/alrayyes/ltex-cli-plus builds the ~200 MB tarball (its own Java
+  # runtime included) into an image once, instead of this job downloading and
+  # unpacking it fresh on every run - still kept out of the git hooks, same
+  # reasoning as before, just no longer duplicated in CI either. The image also
+  # bakes in git and nodejs, so actions/checkout needs no separate install step.
   ltex:
     name: grammar
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    container:
+      image: ghcr.io/alrayyes/ltex-cli-plus:18.7.0@sha256:22452e86a130e528d526b60792926002983fcbf732bff09bd4e843d22816e4ea
+      # ltex-cli-plus is the image's own entrypoint, which leaves no shell for
+      # a step to run in - clearing it gets one back.
+      options: --entrypoint ""
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # Kept out of the git hooks on purpose: this is a ~200 MB download that
-      # ships its own Java runtime, which is more than a commit should wait on.
-      - name: Install ltex-cli-plus
-        run: |
-          mkdir -p "$HOME/ltex"
-          curl -sSfL --retry 3 --retry-connrefused --retry-delay 5 \
-            "https://github.com/ltex-plus/ltex-ls-plus/releases/download/18.7.0/ltex-ls-plus-18.7.0-linux-x64.tar.gz" \
-            | tar -xz -C "$HOME/ltex"
-          # The archive nests the binary under a versioned directory and lists
-          # everything below a leading "./", so a fixed --strip-components is a
-          # guess. Find it instead, so a change to the layout doesn't silently
-          # break the job.
-          bin="$(dirname "$(find "$HOME/ltex" -type f -name ltex-cli-plus | head -1)")"
-          # The release ships its own JDK 21, and the classes are built for it.
-          # Runners set JAVA_HOME to an older JDK, which the launcher picks up
-          # and then dies with UnsupportedClassVersionError. Point it at the
-          # bundled one, which is the whole reason this archive is self-contained.
-          jdk="$(find "$HOME/ltex" -maxdepth 3 -type d -name 'jdk-*' | head -1)"
-          echo "$bin" >> "$GITHUB_PATH"
-          echo "JAVA_HOME=$jdk" >> "$GITHUB_ENV"
-          # Prove it runs here, so a broken install fails at the install step
-          # rather than looking like a document full of mistakes later on.
-          JAVA_HOME="$jdk" "$bin/ltex-cli-plus" --version
       # ltex-cli-plus exits 3 on findings, not 1. Testing for a specific code
       # would pass a failing document, so this checks for any non-zero.
       - name: Check grammar and spelling
         run: |
           set +e
-          ltex-cli-plus --client-configuration=.ltex.json README.md CONTRIBUTING.md
+          /usr/local/bin/ltex-cli-plus --client-configuration=.ltex.json README.md CONTRIBUTING.md
           status=$?
           set -e
           if [ "$status" -eq 0 ]; then
