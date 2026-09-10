@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.6](https://github.com/alrayyes/gwttr/compare/v1.4.5...v1.4.6) (2026-09-10)
+
+
+### Bug Fixes
+
+* **ci:** report_type, not report-type ([1d7c5b4](https://github.com/alrayyes/gwttr/commit/1d7c5b41ee2a625efee0d772586da81c07de9b67))
+
 ## [1.4.5](https://github.com/alrayyes/gwttr/compare/v1.4.4...v1.4.5) (2026-09-10)
 
 
