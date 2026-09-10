@@ -15,6 +15,11 @@
 	"trustedDependencies": [
 		"lefthook"
 	],
+	"overrides": {
+		"fast-uri": "4.1.4",
+		"js-yaml": "5.4.1",
+		"smol-toml": "1.7.2"
+	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.12",
 		"@commitlint/cli": "21.2.2",
