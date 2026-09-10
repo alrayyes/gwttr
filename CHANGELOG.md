@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.5](https://github.com/alrayyes/gwttr/compare/v1.4.4...v1.4.5) (2026-09-10)
+
+
+### Bug Fixes
+
+* **deps:** override fast-uri, js-yaml, and smol-toml advisories ([c1205d4](https://github.com/alrayyes/gwttr/commit/c1205d42a8d2a729502238c0cb46fb4153bd6381))
+
 ## [1.4.4](https://github.com/alrayyes/gwttr/compare/v1.4.3...v1.4.4) (2026-09-04)
 
 
