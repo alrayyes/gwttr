@@ -3,13 +3,14 @@ linters:
   default: all
   disable:
     - depguard
+    - exhaustruct # superseded by exhaustruct_v5, see settings below
     - forbidigo
     - gomodguard
     - varnamelen
     - wsl
   settings:
-    exhaustruct:
-      exclude:
+    exhaustruct_v5:
+      ignore-patterns:
         # cobra.Command has more than thirty fields and is meant to be built
         # with the handful you need. Listing them all says nothing.
         - 'github\.com/spf13/cobra\.Command'

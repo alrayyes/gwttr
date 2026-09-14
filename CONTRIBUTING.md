@@ -5,10 +5,10 @@ changes it.
 
 ## What you need
 
-- **Go 1.24 or newer**, the version in `go.mod` and the one CI builds with.
+- **Go 1.27 or newer**, the version in `go.mod` and the one CI builds with.
 - **[bun](https://bun.sh/)** for the git hooks and the Markdown, YAML and JSON
   tooling. Not npm, yarn or pnpm. The lockfile is `bun.lock`.
-- **[golangci-lint](https://golangci-lint.run/) 2.12.2**, which the hooks and CI
+- **[golangci-lint](https://golangci-lint.run/) 2.13.2**, which the hooks and CI
   both run. The version is pinned in `.github/workflows/golangci-lint.yml`.
   Install that version rather than whichever is current: when the two disagree,
   the hook passes and the pipeline fails, and the failure doesn't say why.
