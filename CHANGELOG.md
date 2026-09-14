@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.8](https://github.com/alrayyes/gwttr/compare/v1.4.7...v1.4.8) (2026-09-14)
+
+
+### Bug Fixes
+
+* **ci:** bump pinned govulncheck to v1.8.0 ([ef74292](https://github.com/alrayyes/gwttr/commit/ef74292412beefa13854c6bcfd1c1e6f8bdb6dee))
+* **lint:** dedupe formatters and add missing linter thresholds ([07be883](https://github.com/alrayyes/gwttr/commit/07be883ba75e6662bf2bf094986d44b4458af8b6))
+
 ## [1.4.7](https://github.com/alrayyes/gwttr/compare/v1.4.6...v1.4.7) (2026-09-14)
 
 
