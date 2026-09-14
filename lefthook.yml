@@ -25,12 +25,31 @@ pre-push:
           # and it runs in CI.
           - run: bun run prose
 
-    - run: go mod download && go build -v ./...
+    # Through Docker, pinned to the go directive in go.mod: a host go/
+    # golangci-lint pairing that's quietly drifted apart is never the thing
+    # a push finds out about (rules/go-mod.md). --user matches the host UID
+    # so a write lands owned by whoever's pushing, not root; GOCACHE and
+    # GOMODCACHE need their own writable mounts since --user leaves $HOME
+    # unset and go's defaults for both resolve under /root.
+    - run: >-
+        docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
+        -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
+        -e GOMODCACHE=/gomod -v "$HOME/.cache/go-mod-docker:/gomod"
+        golang:1.27.1-bookworm sh -c "go mod download && go build -v ./..."
     # go mod edit -fmt has no check-only flag, so diff rather than write.
-    - run: go mod edit -fmt go.mod && git diff --exit-code go.mod
+    - run: >-
+        docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
+        -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
+        -e GOMODCACHE=/gomod -v "$HOME/.cache/go-mod-docker:/gomod"
+        golang:1.27.1-bookworm go mod edit -fmt go.mod
+        && git diff --exit-code go.mod
     # Broader than the -fmt check above: catches a stale require, a
     # non-canonical version string, or a go.sum entry nothing imports anymore.
-    - run: go mod tidy -diff
+    - run: >-
+        docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
+        -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
+        -e GOMODCACHE=/gomod -v "$HOME/.cache/go-mod-docker:/gomod"
+        golang:1.27.1-bookworm go mod tidy -diff
 
     # Through Docker, pinned to the same version CI runs: the image bundles
     # its own matched go build, so a host golangci-lint/go pairing that's
@@ -50,7 +69,11 @@ pre-push:
         golangci/golangci-lint:v2.13.2 golangci-lint fmt --diff ./...
     # No -race here. The detector is slow enough that it would make every push
     # wait, so CI runs it instead. See .github/workflows/test.yml.
-    - run: go test -cover ./...
+    - run: >-
+        docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
+        -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
+        -e GOMODCACHE=/gomod -v "$HOME/.cache/go-mod-docker:/gomod"
+        golang:1.27.1-bookworm go test -cover ./...
 
     - run: goreleaser check
 
@@ -92,10 +115,20 @@ pre-commit:
     - run: go generate ./...
       glob: "*.go"
 
-    - run: go mod download && go build -v ./...
+    # Through Docker, pinned to the go directive in go.mod — see the
+    # pre-push comment above.
+    - run: >-
+        docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
+        -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
+        -e GOMODCACHE=/gomod -v "$HOME/.cache/go-mod-docker:/gomod"
+        golang:1.27.1-bookworm sh -c "go mod download && go build -v ./..."
       glob: "*.go"
 
-    - run: go mod edit -fmt go.mod
+    - run: >-
+        docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
+        -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
+        -e GOMODCACHE=/gomod -v "$HOME/.cache/go-mod-docker:/gomod"
+        golang:1.27.1-bookworm go mod edit -fmt go.mod
       glob: "go.mod"
       stage_fixed: true
 

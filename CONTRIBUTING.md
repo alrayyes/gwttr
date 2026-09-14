@@ -5,15 +5,22 @@ changes it.
 
 ## What you need
 
-- **Go 1.27 or newer**, the version in `go.mod` and the one CI builds with.
+- **Go 1.27 or newer** for actually working on the code — your editor's
+  language server, `go generate`, running the binary directly. The hooks
+  don't need it: `go build`, `go test`, and `go mod edit`/`go mod tidy` all
+  run through a pinned `golang:1.27.1-bookworm` image, the same as
+  golangci-lint below, so a commit or push works on a clean checkout that
+  has Docker but no host Go at all. CI still needs a host Go —
+  `actions/setup-go` installs the version `go.mod` names.
 - **[bun](https://bun.sh/)** for the git hooks and the Markdown, YAML and JSON
   tooling. Not npm, yarn or pnpm. The lockfile is `bun.lock`.
-- **[Docker](https://docs.docker.com/get-docker/)**, for the hooks to run
-  [golangci-lint](https://golangci-lint.run/) — pinned to 2.13.2, the same
-  version CI runs, from its own image rather than a local copy. That stops
-  a locally installed golangci-lint and a locally installed Go from
-  quietly drifting apart, which is the reason a hook can pass and the
-  pipeline still fail.
+- **[Docker](https://docs.docker.com/get-docker/)**, for every Go command the
+  hooks run: `go build`/`go test`/`go mod edit`/`go mod tidy` through
+  `golang:1.27.1-bookworm`, pinned to the `go` directive in `go.mod`, and
+  [golangci-lint](https://golangci-lint.run/) through its own image, pinned
+  to 2.13.2, the same version CI runs. Both stop a locally installed copy
+  from quietly drifting apart from what CI runs, which is the reason a hook
+  can pass and the pipeline still fail.
 - **[Vale](https://vale.sh/)** for prose style. The pre-commit hook runs it, so
   a commit touching Markdown needs it on your `PATH`. Run `vale sync` once after
   cloning to fetch the style packages, which aren't committed.
