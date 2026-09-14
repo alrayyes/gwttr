@@ -19,7 +19,7 @@ To run a released binary you need nothing at all. The builds are static, with
 `CGO_ENABLED=0`. Linux and Windows get x86-64, i386 and arm64 archives, and
 macOS gets x86-64 and arm64.
 
-To build it yourself you need **Go 1.24 or newer**. That's the version in
+To build it yourself you need **Go 1.27 or newer**. That's the version in
 `go.mod`, and it's what CI builds with.
 
 Working on it needs more than that — the tooling list is in
