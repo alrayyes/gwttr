@@ -8,10 +8,12 @@ changes it.
 - **Go 1.27 or newer**, the version in `go.mod` and the one CI builds with.
 - **[bun](https://bun.sh/)** for the git hooks and the Markdown, YAML and JSON
   tooling. Not npm, yarn or pnpm. The lockfile is `bun.lock`.
-- **[golangci-lint](https://golangci-lint.run/) 2.13.2**, which the hooks and CI
-  both run. The version is pinned in `.github/workflows/golangci-lint.yml`.
-  Install that version rather than whichever is current: when the two disagree,
-  the hook passes and the pipeline fails, and the failure doesn't say why.
+- **[Docker](https://docs.docker.com/get-docker/)**, for the hooks to run
+  [golangci-lint](https://golangci-lint.run/) — pinned to 2.13.2, the same
+  version CI runs, from its own image rather than a local copy. That stops
+  a locally installed golangci-lint and a locally installed Go from
+  quietly drifting apart, which is the reason a hook can pass and the
+  pipeline still fail.
 - **[Vale](https://vale.sh/)** for prose style. The pre-commit hook runs it, so
   a commit touching Markdown needs it on your `PATH`. Run `vale sync` once after
   cloning to fetch the style packages, which aren't committed.
