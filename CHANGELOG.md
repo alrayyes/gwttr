@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.7](https://github.com/alrayyes/gwttr/compare/v1.4.6...v1.4.7) (2026-09-14)
+
+
+### Bug Fixes
+
+* **go:** bump go.mod off the EOL 1.24 line to 1.27.1 ([37d5f50](https://github.com/alrayyes/gwttr/commit/37d5f507eb89fc63e8aecba0dcc57fe1f79234be))
+
 ## [1.4.6](https://github.com/alrayyes/gwttr/compare/v1.4.5...v1.4.6) (2026-09-10)
 
 
