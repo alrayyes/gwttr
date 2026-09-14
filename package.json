@@ -1,6 +1,7 @@
 {
 	"name": "gwttr",
 	"description": "Golang wttr.in client",
+	"packageManager": "bun@1.3.14",
 	"scripts": {
 		"format": "prettier --write",
 		"format:check": "prettier --check \"**/*.{md,yml,yaml}\"",
