@@ -26,6 +26,11 @@ pre-push:
           - run: bun run prose
 
     - run: go mod download && go build -v ./...
+    # go mod edit -fmt has no check-only flag, so diff rather than write.
+    - run: go mod edit -fmt go.mod && git diff --exit-code go.mod
+    # Broader than the -fmt check above: catches a stale require, a
+    # non-canonical version string, or a go.sum entry nothing imports anymore.
+    - run: go mod tidy -diff
 
     - run: golangci-lint run ./...
     # --diff, not the writing form: a hook that rewrites files under a push
@@ -35,6 +40,8 @@ pre-push:
     # No -race here. The detector is slow enough that it would make every push
     # wait, so CI runs it instead. See .github/workflows/test.yml.
     - run: go test -cover ./...
+
+    - run: goreleaser check
 
 pre-commit:
   parallel: true
@@ -56,6 +63,10 @@ pre-commit:
 
     - run: go mod download && go build -v ./...
       glob: "*.go"
+
+    - run: go mod edit -fmt go.mod
+      glob: "go.mod"
+      stage_fixed: true
 
     - run: golangci-lint run --fix ./...
       glob: "*.go"
