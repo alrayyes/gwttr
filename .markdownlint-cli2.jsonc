@@ -15,6 +15,13 @@
 		// every time either tool changes its mind.
 		"extends": "markdownlint/style/prettier",
 
+		// The prettier style drops MD013 on the assumption Prettier reflows
+		// prose, which it only does with proseWrap "always"/"never" — this repo
+		// keeps "preserve", so line-length is still a real check and stays on
+		// under its alias (MD013 sits beside the inherited "line-length: false"
+		// and loses, since extends merges on the literal key).
+		"line-length": true,
+
 		// Carried over from the relaxed style this repo used before, so switching
 		// configs doesn't quietly tighten anything.
 		"whitespace": false,
