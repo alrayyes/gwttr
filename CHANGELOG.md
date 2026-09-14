@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/alrayyes/gwttr/compare/v1.4.8...v1.5.0) (2026-09-14)
+
+
+### Features
+
+* **docker:** publish a multi-arch image alongside the binaries ([349803d](https://github.com/alrayyes/gwttr/commit/349803d02ba9989e3b915d2a251b534a7ea9fa68))
+
 ## [1.4.8](https://github.com/alrayyes/gwttr/compare/v1.4.7...v1.4.8) (2026-09-14)
 
 
