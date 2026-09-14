@@ -32,11 +32,22 @@ pre-push:
     # non-canonical version string, or a go.sum entry nothing imports anymore.
     - run: go mod tidy -diff
 
-    - run: golangci-lint run ./...
+    # Through Docker, pinned to the same version CI runs: the image bundles
+    # its own matched go build, so a host golangci-lint/go pairing that's
+    # quietly drifted apart is never the thing a push finds out about.
+    - run: >-
+        docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
+        -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
+        -e GOLANGCI_LINT_CACHE=/cache -v "$HOME/.cache/golangci-lint-docker:/cache"
+        golangci/golangci-lint:v2.13.2 golangci-lint run ./...
     # --diff, not the writing form: a hook that rewrites files under a push
     # leaves the pushed commit and the working tree disagreeing about what was
     # reviewed.
-    - run: golangci-lint fmt --diff ./...
+    - run: >-
+        docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
+        -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
+        -e GOLANGCI_LINT_CACHE=/cache -v "$HOME/.cache/golangci-lint-docker:/cache"
+        golangci/golangci-lint:v2.13.2 golangci-lint fmt --diff ./...
     # No -race here. The detector is slow enough that it would make every push
     # wait, so CI runs it instead. See .github/workflows/test.yml.
     - run: go test -cover ./...
@@ -68,9 +79,19 @@ pre-commit:
       glob: "go.mod"
       stage_fixed: true
 
-    - run: golangci-lint run --fix ./...
+    # Through Docker, pinned to the same version CI and pre-push run — see
+    # the pre-push comment above.
+    - run: >-
+        docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
+        -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
+        -e GOLANGCI_LINT_CACHE=/cache -v "$HOME/.cache/golangci-lint-docker:/cache"
+        golangci/golangci-lint:v2.13.2 golangci-lint run --fix ./...
       glob: "*.go"
       stage_fixed: true
-    - run: golangci-lint fmt ./...
+    - run: >-
+        docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
+        -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
+        -e GOLANGCI_LINT_CACHE=/cache -v "$HOME/.cache/golangci-lint-docker:/cache"
+        golangci/golangci-lint:v2.13.2 golangci-lint fmt ./...
       glob: "*.go"
       stage_fixed: true
