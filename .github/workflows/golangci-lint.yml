@@ -29,3 +29,10 @@ jobs:
       # The same check pre-push runs. The action above only runs `run`.
       - name: golangci-lint fmt
         run: golangci-lint fmt --diff ./...
+      # go mod edit -fmt has no check-only flag, so diff rather than write.
+      - name: go.mod formatting
+        run: go mod edit -fmt go.mod && git diff --exit-code go.mod
+      # Broader than the formatting check above: catches a stale require, a
+      # non-canonical version string, or a go.sum entry nothing imports anymore.
+      - name: go mod tidy
+        run: go mod tidy -diff
