@@ -14,15 +14,31 @@ linters:
         # cobra.Command has more than thirty fields and is meant to be built
         # with the handful you need. Listing them all says nothing.
         - 'github\.com/spf13/cobra\.Command'
+    gocognit:
+      min-complexity: 15
+    gocritic:
+      enabled-checks:
+        - emptyStringTest
+    gocyclo:
+      min-complexity: 15
+    nolintlint:
+      require-explanation: true
+      require-specific: true
+    testifylint:
+      enable-all: true
     wrapcheck:
       ignore-package-globs:
         # Errors crossing our own package boundaries are already wrapped with
         # %w where they're raised. wrapcheck is here for third-party ones.
         - github.com/alrayyes/gwttr/*
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - dupl
 formatters:
   enable:
     - gci
-    - gofmt
     - gofumpt
     - goimports
     - golines
