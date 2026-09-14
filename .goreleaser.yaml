@@ -21,6 +21,36 @@ builds:
       - windows
       - darwin
 
+# dockers_v2, not the older dockers/docker_manifests pair: it drives buildx
+# directly, so one entry builds and pushes the whole multi-arch manifest list
+# instead of one image per arch plus a separate manifest-stitching step. The
+# Dockerfile only COPYs a binary goreleaser already cross-compiled -- see
+# rules/go-releases.md -- so there's nothing arch-specific left to configure
+# beyond which platforms to ask buildx for.
+dockers_v2:
+  - images:
+      - ghcr.io/alrayyes/gwttr
+    tags:
+      - "{{ .Version }}"
+      - latest
+    dockerfile: Dockerfile
+    platforms:
+      - linux/amd64
+      - linux/arm64
+    # Annotations, not labels: this is always a multi-platform manifest list
+    # (goreleaser's dockers_v2 only ever builds through buildx), and a
+    # manifest list has no image config of its own to hold OCI labels --
+    # these land on the index instead, where `docker buildx imagetools
+    # inspect` and the tag itself actually see them.
+    annotations:
+      org.opencontainers.image.name: "{{ .ProjectName }}"
+      org.opencontainers.image.description: "A proof-of-concept Go client for wttr.in"
+      org.opencontainers.image.source: "{{ .GitURL }}"
+      org.opencontainers.image.version: "{{ .Version }}"
+      org.opencontainers.image.created: "{{ .Date }}"
+      org.opencontainers.image.revision: "{{ .FullCommit }}"
+      org.opencontainers.image.licenses: "GPL-3.0"
+
 archives:
   - formats: [tar.gz]
     # Names the OS and architecture the way uname reports them, so the archive

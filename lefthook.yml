@@ -54,6 +54,26 @@ pre-push:
 
     - run: goreleaser check
 
+    # Pinned, same rule as golangci-lint above. Never a floating :latest.
+    - run: >-
+        docker run --rm -i -v "$(pwd)/.hadolint.yaml:/.hadolint.yaml"
+        hadolint/hadolint:v2.14.0@sha256:27086352fd5e1907ea2b934eb1023f217c5ae087992eb59fde121dce9c9ff21e
+        < Dockerfile
+
+    # hadolint reads the Dockerfile as text; this proves it still builds.
+    # goreleaser copies a prebuilt binary in rather than compiling inside the
+    # Dockerfile (rules/go-releases.md), so this stages one at the path the
+    # Dockerfile's $TARGETPLATFORM COPY expects before handing buildx the
+    # full repo as context. Unconditional here, unlike the pre-commit copy
+    # below, the same way the rest of pre-push stays unconditional.
+    - run: >-
+        GOARCH=$(go env GOARCH) &&
+        mkdir -p "linux/$GOARCH" &&
+        CGO_ENABLED=0 GOOS=linux GOARCH="$GOARCH" go build -o "linux/$GOARCH/gwttr" ./cmd/gwttr &&
+        docker build --platform "linux/$GOARCH" -t gwttr:lefthook-check . &&
+        docker rmi gwttr:lefthook-check &&
+        rm -rf linux
+
 pre-commit:
   parallel: true
   jobs:
@@ -95,3 +115,20 @@ pre-commit:
         golangci/golangci-lint:v2.13.2 golangci-lint fmt ./...
       glob: "*.go"
       stage_fixed: true
+
+    # Glob-scoped to the Dockerfile plus what it (indirectly, via the
+    # binary) pulls in, so this is skipped entirely on a commit that
+    # touches neither and cheap -- a warm layer cache -- on one that does.
+    - run: >-
+        docker run --rm -i -v "$(pwd)/.hadolint.yaml:/.hadolint.yaml"
+        hadolint/hadolint:v2.14.0@sha256:27086352fd5e1907ea2b934eb1023f217c5ae087992eb59fde121dce9c9ff21e
+        < Dockerfile
+      glob: "{Dockerfile,**/*.go,go.mod,go.sum}"
+    - run: >-
+        GOARCH=$(go env GOARCH) &&
+        mkdir -p "linux/$GOARCH" &&
+        CGO_ENABLED=0 GOOS=linux GOARCH="$GOARCH" go build -o "linux/$GOARCH/gwttr" ./cmd/gwttr &&
+        docker build --platform "linux/$GOARCH" -t gwttr:lefthook-check . &&
+        docker rmi gwttr:lefthook-check &&
+        rm -rf linux
+      glob: "{Dockerfile,**/*.go,go.mod,go.sum}"

@@ -29,7 +29,11 @@
 			"arm64",
 			"npm",
 			"yarn",
-			"pnpm"
+			"pnpm",
+			"GHCR",
+			"distroless",
+			"writable",
+			"filesystem"
 		]
 	},
 	"ltex.disabledRules": {

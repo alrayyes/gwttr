@@ -47,3 +47,30 @@ jobs:
         # it puts the findings on the diff as annotations. It still never
         # writes, because `check` without --write doesn't.
         run: bun run lint . --reporter=github
+  docker:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - name: hadolint
+        # Same pinned image the hooks run.
+        run: >-
+          docker run --rm -i -v "$(pwd)/.hadolint.yaml:/.hadolint.yaml"
+          hadolint/hadolint:v2.14.0@sha256:27086352fd5e1907ea2b934eb1023f217c5ae087992eb59fde121dce9c9ff21e
+          < Dockerfile
+      # hadolint reads the Dockerfile as text and never checks that it
+      # actually builds. goreleaser copies a prebuilt binary in rather than
+      # compiling inside the Dockerfile (rules/go-releases.md), so this
+      # stages one at the path the Dockerfile's $TARGETPLATFORM COPY expects
+      # before handing buildx the full repo as context -- same check the
+      # hooks run, unconditional here same as everything else in this job.
+      - name: docker build
+        run: |
+          GOARCH=$(go env GOARCH)
+          mkdir -p "linux/$GOARCH"
+          CGO_ENABLED=0 GOOS=linux GOARCH="$GOARCH" go build -o "linux/$GOARCH/gwttr" ./cmd/gwttr
+          docker build --platform "linux/$GOARCH" -t gwttr:ci-check .

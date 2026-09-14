@@ -43,6 +43,21 @@ Or install it straight into your Go bin directory:
 go install github.com/alrayyes/gwttr/cmd/gwttr@latest
 ```
 
+Or run it straight from the multi-arch (amd64/arm64) image on GHCR, with no
+Go on your machine at all:
+
+```shell
+docker run --rm ghcr.io/alrayyes/gwttr:latest honolulu
+```
+
+The image runs non-root already (distroless's own `nonroot` user) and needs
+no writable filesystem, so it's safe to run locked down further:
+
+```shell
+docker run --rm --cap-drop=ALL --security-opt=no-new-privileges --read-only \
+  ghcr.io/alrayyes/gwttr:latest honolulu
+```
+
 ## Usage
 
 With no arguments it reports on Honolulu:

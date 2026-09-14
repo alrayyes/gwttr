@@ -34,3 +34,5 @@ arm64
 npm
 yarn
 pnpm
+GHCR
+distroless
