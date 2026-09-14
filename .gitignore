@@ -28,6 +28,10 @@ go.work.sum
 
 dist/
 
+# Staged by the Dockerfile build check in lefthook.yml and CI -- a
+# TARGETPLATFORM-shaped copy of the binary for a plain `docker build .`.
+/linux/
+
 # Vale's style packages are downloaded, not committed: `vale sync` fetches
 # these two. Ignored by name rather than ignoring styles/ wholesale, which
 # would take the House vocabulary with them.
