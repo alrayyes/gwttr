@@ -24,9 +24,10 @@ changes it.
 - **[Vale](https://vale.sh/)** for prose style. The pre-commit hook runs it, so
   a commit touching Markdown needs it on your `PATH`. Run `vale sync` once after
   cloning to fetch the style packages, which aren't committed.
-
-[GoReleaser](https://goreleaser.com/) is only needed if you want to reproduce a
-release build locally.
+- **[GoReleaser](https://goreleaser.com/)**, for `goreleaser check` in the
+  pre-push hook, which validates `.goreleaser.yaml` on every push. Reproducing
+  a full release build locally needs it too, but that's not what makes it a
+  prerequisite here.
 
 ## Getting set up
 
