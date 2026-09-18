@@ -55,6 +55,7 @@ no writable filesystem, so it's safe to run locked down further:
 
 ```shell
 docker run --rm --cap-drop=ALL --security-opt=no-new-privileges --read-only \
+  --memory=64m --cpus=0.5 \
   ghcr.io/alrayyes/gwttr:latest honolulu
 ```
 
