@@ -47,6 +47,8 @@ jobs:
         # it puts the findings on the diff as annotations. It still never
         # writes, because `check` without --write doesn't.
         run: bun run lint . --reporter=github
+      - name: Check package.json ordering
+        run: bun run sort-package-json:check
   docker:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
