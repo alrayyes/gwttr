@@ -1,21 +1,19 @@
 {
 	"name": "gwttr",
 	"description": "Golang wttr.in client",
-	"packageManager": "bun@1.3.14",
+	"license": "GPL-3.0-only",
+	"author": "Ryan Kes <ryan@ryankes.eu>",
 	"scripts": {
 		"format": "prettier --write",
 		"format:check": "prettier --check \"**/*.{md,yml,yaml}\"",
-		"md:lint": "markdownlint-cli2",
-		"prose": "vale --no-exit --glob='!{styles/**,node_modules/**,CHANGELOG.md}' .",
-		"prepare": "lefthook install",
 		"lint": "biome check",
-		"lint:fix": "biome check --write"
+		"lint:fix": "biome check --write",
+		"md:lint": "markdownlint-cli2",
+		"prepare": "lefthook install",
+		"prose": "vale --no-exit --glob='!{styles/**,node_modules/**,CHANGELOG.md}' .",
+		"sort-package-json": "sort-package-json",
+		"sort-package-json:check": "sort-package-json --check"
 	},
-	"author": "Ryan Kes <ryan@ryankes.eu>",
-	"license": "GPL-3.0-only",
-	"trustedDependencies": [
-		"lefthook"
-	],
 	"overrides": {
 		"fast-uri": "4.1.4",
 		"js-yaml": "5.4.1",
@@ -27,6 +25,11 @@
 		"@commitlint/config-conventional": "21.2.2",
 		"lefthook": "2.1.12",
 		"markdownlint-cli2": "0.23.2",
-		"prettier": "3.9.6"
-	}
+		"prettier": "3.9.6",
+		"sort-package-json": "4.0.0"
+	},
+	"packageManager": "bun@1.3.14",
+	"trustedDependencies": [
+		"lefthook"
+	]
 }

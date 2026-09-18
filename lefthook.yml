@@ -10,6 +10,10 @@ pre-push:
   jobs:
     - run: bun run lint .
 
+    # Check mode only, like every other pre-push job -- nothing under a push
+    # may write.
+    - run: bun run sort-package-json:check
+
     # Piped, because Prettier decides the layout and markdownlint then judges
     # what Prettier produced. The other order has markdownlint reporting on
     # something Prettier is about to rewrite. Check mode only — nothing under a
@@ -102,6 +106,10 @@ pre-commit:
   jobs:
     - run: bun run lint:fix .
       glob: "*"
+      stage_fixed: true
+
+    - run: bun run sort-package-json
+      glob: "package.json"
       stage_fixed: true
 
     # Same order as pre-push, with Prettier writing rather than checking. The
