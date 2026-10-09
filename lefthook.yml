@@ -128,7 +128,7 @@ pre-commit:
             stage_fixed: true
           - name: markdownlint
             glob: "*.md"
-            run: bun run md:lint {staged_files}
+            run: bunx markdownlint-cli2 --no-globs {staged_files}
           # Reports only, and not on the generated changelog.
           - name: vale
             glob: "*.md"
