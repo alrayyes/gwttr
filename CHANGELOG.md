@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/alrayyes/gwttr/compare/v1.5.0...v1.5.1) (2026-10-09)
+
+
+### Bug Fixes
+
+* **deps:** bump Go to 1.27.2 ([7e7abe8](https://github.com/alrayyes/gwttr/commit/7e7abe8ca9ca0dc12053c10f2d8fd70bc114ac16))
+
 ## [1.5.0](https://github.com/alrayyes/gwttr/compare/v1.4.8...v1.5.0) (2026-09-14)
 
 
