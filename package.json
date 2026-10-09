@@ -7,10 +7,10 @@
 		"format": "prettier --write",
 		"format:check": "prettier --check \"**/*.{md,yml,yaml}\"",
 		"lint": "biome check",
-		"lint:fix": "biome check --write",
+		"lint:fix": "biome check --write --no-errors-on-unmatched",
 		"md:lint": "markdownlint-cli2",
 		"prepare": "lefthook install",
-		"prose": "vale --no-exit --glob='!{styles/**,node_modules/**,CHANGELOG.md}' .",
+		"prose": "vale --no-exit --glob='!{styles/**,node_modules/**,CHANGELOG.md}'",
 		"sort-package-json": "sort-package-json",
 		"sort-package-json:check": "sort-package-json --check"
 	},
