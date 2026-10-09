@@ -18,7 +18,7 @@ changes it.
   hooks run: `go build`/`go test`/`go mod edit`/`go mod tidy` through
   `golang:1.27.1-bookworm`, pinned to the `go` directive in `go.mod`, and
   [golangci-lint](https://golangci-lint.run/) through its own image, pinned
-  to 2.13.2, the same version CI runs. Both stop a locally installed copy
+  to 2.14.0, the same version CI runs. Both stop a locally installed copy
   from quietly drifting apart from what CI runs, which is the reason a hook
   can pass and the pipeline still fail.
 - **[Vale](https://vale.sh/)** for prose style. The pre-commit hook runs it, so
