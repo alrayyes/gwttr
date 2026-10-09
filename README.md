@@ -91,6 +91,18 @@ This is a command, not a library. The packages behind it live under `internal/`,
 so they're documented for whoever works on the repo rather than published for
 anyone to import.
 
+## Reports
+
+Every push to `main` publishes the test and coverage reports:
+
+- [Test results][tests] as JUnit XML
+- [Coverage][cov] as an HTML view
+- [Coverage][cov-xml] as Cobertura XML
+
+[tests]: https://apis.ryankes.eu/gwttr/reports/tests/junit.xml
+[cov]: https://apis.ryankes.eu/gwttr/reports/coverage/
+[cov-xml]: https://apis.ryankes.eu/gwttr/reports/coverage/coverage.xml
+
 ## Contributing
 
 Everything about working on this — the tooling, the git hooks, how the checks

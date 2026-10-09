@@ -11,7 +11,7 @@ permissions:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   test:
@@ -54,3 +54,103 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           report_type: test_results
           files: junit.xml
+
+      # Short-lived and internal: the reports job below turns these into the
+      # published site. Always uploaded so a pull request proves the assembly.
+      - name: Upload raw results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: raw-results
+          path: |
+            junit.xml
+            coverage.txt
+          retention-days: 1
+
+  reports:
+    name: Assemble reports
+    needs: test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+
+      - name: Download raw results
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: raw-results
+
+      # codecov.yml ignores cmd/gwttr/main.go (the composition root), so the
+      # published number drops it too and matches Codecov's.
+      - name: Assemble site/reports
+        env:
+          COMMIT: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          mkdir -p site/reports/tests site/reports/coverage
+          grep -v '/cmd/gwttr/main.go:' coverage.txt > site/reports/coverage/coverage.txt
+          go tool gocover-cobertura < site/reports/coverage/coverage.txt > site/reports/coverage/coverage.xml
+          go tool cover -html=site/reports/coverage/coverage.txt -o site/reports/coverage/index.html
+          cp junit.xml site/reports/tests/junit.xml
+          grep -q '<coverage ' site/reports/coverage/coverage.xml
+          cat > site/reports/index.html <<HTML
+          <!doctype html>
+          <html lang="en">
+          <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>gwttr reports</title>
+          </head>
+          <body>
+          <main>
+          <h1>gwttr reports</h1>
+          <p>Commit <code>${COMMIT}</code>, built $(date -u +%Y-%m-%d).</p>
+          <ul>
+          <li><a href="tests/junit.xml">Test results (JUnit XML)</a></li>
+          <li><a href="coverage/">Coverage (HTML)</a></li>
+          <li><a href="coverage/coverage.xml">Coverage (Cobertura XML)</a></li>
+          <li><a href="coverage/coverage.txt">Coverage (Go profile)</a></li>
+          </ul>
+          </main>
+          </body>
+          </html>
+          HTML
+
+      - name: Upload Pages artifact
+        if: ${{ github.event_name == 'push' }}
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site
+
+  deploy:
+    name: Deploy reports
+    if: ${{ github.event_name == 'push' }}
+    needs: [test, reports]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+
+      # The deploy succeeds whether or not the URL serves, so fetch the real
+      # file. The retries cover the CDN catching up.
+      - name: Check the live coverage report
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          curl --fail --silent --show-error --location --retry 6 --retry-delay 10 \
+            --retry-all-errors --output coverage.xml "${PAGE_URL%/}/reports/coverage/coverage.xml"
+          grep -q '<coverage ' coverage.xml
