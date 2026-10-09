@@ -39,13 +39,13 @@ pre-push:
         docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
         -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
         -e GOMODCACHE=/gomod -v "$HOME/.cache/go-mod-docker:/gomod"
-        golang:1.27.1-bookworm sh -c "go mod download && go build -v ./..."
+        golang:1.27.2-bookworm sh -c "go mod download && go build -v ./..."
     # go mod edit -fmt has no check-only flag, so diff rather than write.
     - run: >-
         docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
         -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
         -e GOMODCACHE=/gomod -v "$HOME/.cache/go-mod-docker:/gomod"
-        golang:1.27.1-bookworm go mod edit -fmt go.mod
+        golang:1.27.2-bookworm go mod edit -fmt go.mod
         && git diff --exit-code go.mod
     # Broader than the -fmt check above: catches a stale require, a
     # non-canonical version string, or a go.sum entry nothing imports anymore.
@@ -53,7 +53,7 @@ pre-push:
         docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
         -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
         -e GOMODCACHE=/gomod -v "$HOME/.cache/go-mod-docker:/gomod"
-        golang:1.27.1-bookworm go mod tidy -diff
+        golang:1.27.2-bookworm go mod tidy -diff
 
     # Through Docker, pinned to the same version CI runs: the image bundles
     # its own matched go build, so a host golangci-lint/go pairing that's
@@ -77,7 +77,7 @@ pre-push:
         docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
         -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
         -e GOMODCACHE=/gomod -v "$HOME/.cache/go-mod-docker:/gomod"
-        golang:1.27.1-bookworm go test -cover ./...
+        golang:1.27.2-bookworm go test -cover ./...
 
     - run: goreleaser check
 
@@ -129,14 +129,14 @@ pre-commit:
         docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
         -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
         -e GOMODCACHE=/gomod -v "$HOME/.cache/go-mod-docker:/gomod"
-        golang:1.27.1-bookworm sh -c "go mod download && go build -v ./..."
+        golang:1.27.2-bookworm sh -c "go mod download && go build -v ./..."
       glob: "*.go"
 
     - run: >-
         docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
         -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
         -e GOMODCACHE=/gomod -v "$HOME/.cache/go-mod-docker:/gomod"
-        golang:1.27.1-bookworm go mod edit -fmt go.mod
+        golang:1.27.2-bookworm go mod edit -fmt go.mod
       glob: "go.mod"
       stage_fixed: true
 
