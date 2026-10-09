@@ -33,7 +33,8 @@
 			"GHCR",
 			"distroless",
 			"writable",
-			"filesystem"
+			"filesystem",
+			"Cobertura"
 		]
 	},
 	"ltex.disabledRules": {
