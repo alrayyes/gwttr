@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/alrayyes/gwttr/compare/v1.5.1...v1.5.2) (2026-10-09)
+
+
+### Bug Fixes
+
+* **deps:** bump lefthook golang image to 1.27.2 ([3e220cd](https://github.com/alrayyes/gwttr/commit/3e220cdb462a0d5cb22f8f382651b971a4268cdb)), closes [#329](https://github.com/alrayyes/gwttr/issues/329)
+
 ## [1.5.1](https://github.com/alrayyes/gwttr/compare/v1.5.0...v1.5.1) (2026-10-09)
 
 
