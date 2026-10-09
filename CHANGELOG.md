@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.3](https://github.com/alrayyes/gwttr/compare/v1.5.2...v1.5.3) (2026-10-09)
+
+
+### Bug Fixes
+
+* **deps:** clear bun audit advisories ([816110d](https://github.com/alrayyes/gwttr/commit/816110dcdc8c345fee98363f14ee98908265c505)), closes [#328](https://github.com/alrayyes/gwttr/issues/328)
+
 ## [1.5.2](https://github.com/alrayyes/gwttr/compare/v1.5.1...v1.5.2) (2026-10-09)
 
 
