@@ -57,8 +57,12 @@ service means writing another `Source`, not touching `Report`.
 
 ## The hooks
 
-- **pre-commit** formats what it can and stages the result. Biome writes JSON,
-  Prettier writes Markdown and YAML, and `golangci-lint fmt` writes Go.
+- **pre-commit** judges only what the commit contains. Every job is handed the
+  staged files, so a half-finished file elsewhere in the tree can't fail, or be
+  rewritten by, a commit. It formats what it can and stages the result: Biome
+  writes JSON, Prettier writes Markdown and YAML, and `golangci-lint fmt`
+  writes Go. Tools that can't take a file list (`golangci-lint run`, builds,
+  `docker build`) run in pre-push and CI instead.
 - **commit-msg** runs [commitlint](https://commitlint.js.org/). Commits follow
   [Conventional Commits](https://www.conventionalcommits.org/), which is also
   how the next version number gets decided. `feat:` and `fix:` are load bearing,

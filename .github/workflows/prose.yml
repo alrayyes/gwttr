@@ -38,7 +38,7 @@ jobs:
         with:
           bun-version: 1.3.14
       - name: Run Vale
-        run: bun run prose
+        run: bun run prose .
 
   # Mechanics. Grammar and spelling have a right answer, so this one is a gate.
   # ghcr.io/alrayyes/ltex-cli-plus builds the ~200 MB tarball (its own Java

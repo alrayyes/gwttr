@@ -27,7 +27,7 @@ pre-push:
           # Reports only. Style is advice, and advice that fails a push is how
           # people learn to reach for --no-verify. LTeX is the tier that gates,
           # and it runs in CI.
-          - run: bun run prose
+          - run: bun run prose .
 
     # Through Docker, pinned to the go directive in go.mod: a host go/
     # golangci-lint pairing that's quietly drifted apart is never the thing
@@ -101,36 +101,39 @@ pre-push:
         docker rmi gwttr:lefthook-check &&
         rm -rf linux
 
+# Judges only what the commit contains: every job gets {staged_files}, so a
+# half-finished file elsewhere in the tree can't fail, or be rewritten by, a
+# commit. Anything that can't take a file list (golangci-lint run, builds,
+# generation, docker) runs in pre-push and CI instead.
 pre-commit:
   parallel: true
   jobs:
-    - run: bun run lint:fix .
-      glob: "*"
+    - run: bun run lint:fix {staged_files}
+      glob: "*.{js,jsx,ts,tsx,json,jsonc,css}"
       stage_fixed: true
 
-    - run: bun run sort-package-json
+    - run: bun run sort-package-json {staged_files}
       glob: "package.json"
       stage_fixed: true
 
-    # Same order as pre-push, with Prettier writing rather than checking. The
-    # staged files are named explicitly rather than left to Prettier's own
-    # glob, because stage_fixed only puts back files lefthook handed to the job.
+    # Piped, same order as pre-push, with Prettier writing rather than
+    # checking: Prettier decides the layout, markdownlint then judges it.
     - name: prose and yaml
-      glob: "*.{md,yml,yaml}"
-      run: bun run format {staged_files} && bun run md:lint && bun run prose
-      stage_fixed: true
-
-    - run: go generate ./...
-      glob: "*.go"
-
-    # Through Docker, pinned to the go directive in go.mod — see the
-    # pre-push comment above.
-    - run: >-
-        docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
-        -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
-        -e GOMODCACHE=/gomod -v "$HOME/.cache/go-mod-docker:/gomod"
-        golang:1.27.2-bookworm sh -c "go mod download && go build -v ./..."
-      glob: "*.go"
+      group:
+        piped: true
+        jobs:
+          - name: prettier
+            glob: "*.{md,yml,yaml}"
+            run: bun run format {staged_files}
+            stage_fixed: true
+          - name: markdownlint
+            glob: "*.md"
+            run: bun run md:lint {staged_files}
+          # Reports only, and not on the generated changelog.
+          - name: vale
+            glob: "*.md"
+            exclude: CHANGELOG.md
+            run: bun run prose {staged_files}
 
     - run: >-
         docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
@@ -140,36 +143,19 @@ pre-commit:
       glob: "go.mod"
       stage_fixed: true
 
-    # Through Docker, pinned to the same version CI and pre-push run — see
-    # the pre-push comment above.
+    # Through Docker, pinned to the same version CI and pre-push run. fmt
+    # takes the file list; `run` type-checks whole packages, so it is
+    # pre-push only.
     - run: >-
         docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
         -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
         -e GOLANGCI_LINT_CACHE=/cache -v "$HOME/.cache/golangci-lint-docker:/cache"
-        golangci/golangci-lint:v2.14.0 golangci-lint run --fix ./...
-      glob: "*.go"
-      stage_fixed: true
-    - run: >-
-        docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
-        -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
-        -e GOLANGCI_LINT_CACHE=/cache -v "$HOME/.cache/golangci-lint-docker:/cache"
-        golangci/golangci-lint:v2.14.0 golangci-lint fmt ./...
+        golangci/golangci-lint:v2.14.0 golangci-lint fmt {staged_files}
       glob: "*.go"
       stage_fixed: true
 
-    # Glob-scoped to the Dockerfile plus what it (indirectly, via the
-    # binary) pulls in, so this is skipped entirely on a commit that
-    # touches neither and cheap -- a warm layer cache -- on one that does.
+    # Reads the staged Dockerfile from the index, not the working tree.
     - run: >-
-        docker run --rm -i -v "$(pwd)/.hadolint.yaml:/.hadolint.yaml"
-        hadolint/hadolint:v2.14.0@sha256:27086352fd5e1907ea2b934eb1023f217c5ae087992eb59fde121dce9c9ff21e
-        < Dockerfile
-      glob: "{Dockerfile,**/*.go,go.mod,go.sum}"
-    - run: >-
-        GOARCH=$(go env GOARCH) &&
-        mkdir -p "linux/$GOARCH" &&
-        CGO_ENABLED=0 GOOS=linux GOARCH="$GOARCH" go build -o "linux/$GOARCH/gwttr" ./cmd/gwttr &&
-        docker build --platform "linux/$GOARCH" -t gwttr:lefthook-check . &&
-        docker rmi gwttr:lefthook-check &&
-        rm -rf linux
-      glob: "{Dockerfile,**/*.go,go.mod,go.sum}"
+        git show :Dockerfile | docker run --rm -i -v "$(pwd)/.hadolint.yaml:/.hadolint.yaml"
+        hadolint/hadolint:v2.14.0@sha256:27086352fd5e1907ea2b934eb1023f217c5ae087992eb59fde121dce9c9ff21e -
+      glob: "Dockerfile"
