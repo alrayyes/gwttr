@@ -62,7 +62,7 @@ pre-push:
         docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
         -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
         -e GOLANGCI_LINT_CACHE=/cache -v "$HOME/.cache/golangci-lint-docker:/cache"
-        golangci/golangci-lint:v2.13.2 golangci-lint run ./...
+        golangci/golangci-lint:v2.14.0 golangci-lint run ./...
     # --diff, not the writing form: a hook that rewrites files under a push
     # leaves the pushed commit and the working tree disagreeing about what was
     # reviewed.
@@ -70,7 +70,7 @@ pre-push:
         docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
         -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
         -e GOLANGCI_LINT_CACHE=/cache -v "$HOME/.cache/golangci-lint-docker:/cache"
-        golangci/golangci-lint:v2.13.2 golangci-lint fmt --diff ./...
+        golangci/golangci-lint:v2.14.0 golangci-lint fmt --diff ./...
     # No -race here. The detector is slow enough that it would make every push
     # wait, so CI runs it instead. See .github/workflows/test.yml.
     - run: >-
@@ -146,14 +146,14 @@ pre-commit:
         docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
         -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
         -e GOLANGCI_LINT_CACHE=/cache -v "$HOME/.cache/golangci-lint-docker:/cache"
-        golangci/golangci-lint:v2.13.2 golangci-lint run --fix ./...
+        golangci/golangci-lint:v2.14.0 golangci-lint run --fix ./...
       glob: "*.go"
       stage_fixed: true
     - run: >-
         docker run --rm --user "$(id -u):$(id -g)" -v "$(pwd):/src" -w /src
         -e GOCACHE=/gocache -v "$HOME/.cache/go-build-docker:/gocache"
         -e GOLANGCI_LINT_CACHE=/cache -v "$HOME/.cache/golangci-lint-docker:/cache"
-        golangci/golangci-lint:v2.13.2 golangci-lint fmt ./...
+        golangci/golangci-lint:v2.14.0 golangci-lint fmt ./...
       glob: "*.go"
       stage_fixed: true
 
