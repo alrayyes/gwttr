@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/alrayyes/gwttr/compare/v1.5.3...v1.6.0) (2026-10-09)
+
+
+### Features
+
+* **ci:** publish test and coverage reports to GitHub Pages ([f9e8dcc](https://github.com/alrayyes/gwttr/commit/f9e8dcc569fb2e66587ac939df6ca01679d97b82))
+
 ## [1.5.3](https://github.com/alrayyes/gwttr/compare/v1.5.2...v1.5.3) (2026-10-09)
 
 
