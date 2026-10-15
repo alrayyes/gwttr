@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/alrayyes/gwttr/compare/v1.6.0...v1.6.1) (2026-10-15)
+
+
+### Bug Fixes
+
+* **ci:** run release-auto-merge when the autorelease label is added ([84c20a5](https://github.com/alrayyes/gwttr/commit/84c20a5ce021fb2cd0222723620bb08726d30b3f)), closes [#342](https://github.com/alrayyes/gwttr/issues/342)
+
 ## [1.6.0](https://github.com/alrayyes/gwttr/compare/v1.5.3...v1.6.0) (2026-10-09)
 
 
