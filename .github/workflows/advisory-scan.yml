@@ -51,4 +51,4 @@ jobs:
             bun audit || status=1
             exit "${status}"
           timeout-seconds: 600
-          labels: bug,go
+          labels: bug
