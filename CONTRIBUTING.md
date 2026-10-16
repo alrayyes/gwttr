@@ -113,7 +113,7 @@ filter nobody can use. Leave `dependencies`, `autorelease: pending` and
 The `Dependency audit` workflow runs `govulncheck` and `bun audit`, and fails a
 pull request only for advisories that pull request adds over its base. What is
 already on `main` is tracked by `advisory-scan.yml`, which keeps one open
-`Dependency advisories` issue (labelled `bug` and `go`) and closes it when both
+`Dependency advisories` issue (labelled `bug`) and closes it when both
 audits are clean. Nothing is ignored.
 
 ## Releases
