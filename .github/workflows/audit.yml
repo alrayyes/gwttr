@@ -45,7 +45,8 @@ jobs:
   # What is already on main is the scan's to track, in advisory-scan.yml.
   govulncheck:
     needs: changes
-    if: needs.changes.outputs.go == 'true'
+    # A failed changes job still runs the gate: a missing base must not read as nothing changed.
+    if: ${{ !cancelled() && (needs.changes.result == 'failure' || needs.changes.outputs.go == 'true') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -63,7 +64,8 @@ jobs:
   # bun audit reads the lockfile, so neither side needs an install.
   bun-audit:
     needs: changes
-    if: needs.changes.outputs.bun == 'true'
+    # A failed changes job still runs the gate: a missing base must not read as nothing changed.
+    if: ${{ !cancelled() && (needs.changes.result == 'failure' || needs.changes.outputs.bun == 'true') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
