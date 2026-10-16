@@ -46,9 +46,32 @@ jobs:
         with:
           mode: scan
           command: |
+            # Each tool's output is held back and printed only once every tool has run. A tool that
+            # fails without naming an advisory (registry down, build error) makes the wrapper exit
+            # non-zero and print nothing but that error, so another tool's advisory IDs can't hide
+            # it and the ticket is left alone. advisory-scan#8 (multi-command support) will replace
+            # this wrapper.
             status=0
-            go run golang.org/x/vuln/cmd/govulncheck@v1.8.0 ./... || status=1
-            bun audit || status=1
+            errors=""
+            reports=""
+            run_tool() {
+              out=$("$@" 2>&1) && rc=0 || rc=$?
+              if printf '%s\n' "${out}" | grep -Eq 'GHSA-|CVE-|GO-[0-9]{4}-'; then
+                reports="${reports}${out}"$'\n'
+                [ "${rc}" -eq 0 ] || status=1
+              elif [ "${rc}" -ne 0 ]; then
+                errors="${errors}${out}"$'\n'
+              else
+                reports="${reports}${out}"$'\n'
+              fi
+            }
+            run_tool go run golang.org/x/vuln/cmd/govulncheck@v1.8.0 ./...
+            run_tool bun audit
+            if [ -n "${errors}" ]; then
+              printf 'audit tool failed without naming an advisory:\n%s' "${errors}" >&2
+              exit 2
+            fi
+            printf '%s' "${reports}"
             exit "${status}"
           timeout-seconds: 600
           labels: bug
