@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.6.2](https://github.com/alrayyes/gwttr/compare/v1.6.1...v1.6.2) (2026-10-16)
+
+
+### Bug Fixes
+
+* **ci:** keep one tool's error from hiding behind another's advisories ([1e549d4](https://github.com/alrayyes/gwttr/commit/1e549d4ca1f752d3f124e844dce7a16a4f1a92f8))
+* **ci:** label the advisory ticket bug only ([d759ac1](https://github.com/alrayyes/gwttr/commit/d759ac13889c5ced5b068093f9489be8aa01ce73))
+* **ci:** run the audit gates when the changes job fails ([b9b4d11](https://github.com/alrayyes/gwttr/commit/b9b4d1185ed349e39632ff3ac3d02159d3b60c47))
+
 ## [1.6.1](https://github.com/alrayyes/gwttr/compare/v1.6.0...v1.6.1) (2026-10-15)
 
 
