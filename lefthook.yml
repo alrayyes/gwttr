@@ -8,6 +8,11 @@ commit-msg:
 pre-push:
   parallel: true
   jobs:
+    # The whole history rather than the unpushed range: it takes well under a
+    # second at this size, and CI does the same (rules/secrets.md).
+    - name: gitleaks
+      run: gitleaks git --redact --no-banner
+
     - run: bun run lint .
 
     # Check mode only, like every other pre-push job -- nothing under a push
@@ -108,6 +113,9 @@ pre-push:
 pre-commit:
   parallel: true
   jobs:
+    - name: gitleaks
+      run: gitleaks git --staged --redact --no-banner
+
     - run: bun run lint:fix {staged_files}
       glob: "*.{js,jsx,ts,tsx,json,jsonc,css}"
       stage_fixed: true
