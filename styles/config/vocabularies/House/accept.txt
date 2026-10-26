@@ -6,6 +6,7 @@ bunx
 Biome
 Prettier
 lefthook
+gitleaks
 commitlint
 markdownlint
 markdownlint-cli2

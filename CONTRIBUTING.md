@@ -24,6 +24,11 @@ changes it.
 - **[Vale](https://vale.sh/)** for prose style. The pre-commit hook runs it, so
   a commit touching Markdown needs it on your `PATH`. Run `vale sync` once after
   cloning to fetch the style packages, which aren't committed.
+- **[gitleaks](https://github.com/gitleaks/gitleaks)**, on your `PATH`. The
+  pre-commit hook scans the staged changes and the pre-push hook scans the whole
+  history; CI scans the whole history again on every pull request. Findings are
+  redacted in the output. The rules are gitleaks's defaults, extended from
+  `.gitleaks.toml`.
 - **[GoReleaser](https://goreleaser.com/)**, for `goreleaser check` in the
   pre-push hook, which validates `.goreleaser.yaml` on every push. Reproducing
   a full release build locally needs it too, but that's not what makes it a
@@ -67,7 +72,8 @@ service means writing another `Source`, not touching `Report`.
   [Conventional Commits](https://www.conventionalcommits.org/), which is also
   how the next version number gets decided. `feat:` and `fix:` are load bearing,
   not decoration.
-- **pre-push** checks everything again in report-only mode and runs the tests.
+- **pre-push** checks everything again in report-only mode, scans the whole
+  history with gitleaks, and runs the tests.
   Nothing at this stage writes to your files, so what you push is what you
   reviewed.
 
