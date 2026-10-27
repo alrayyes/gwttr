@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.3](https://github.com/alrayyes/gwttr/compare/v1.6.2...v1.6.3) (2026-10-27)
+
+
+### Bug Fixes
+
+* **lint:** leave markdown to markdownlint ([2a3f53e](https://github.com/alrayyes/gwttr/commit/2a3f53ecf5d751227ab572977acda90c0a2f20db))
+
 ## [1.6.2](https://github.com/alrayyes/gwttr/compare/v1.6.1...v1.6.2) (2026-10-16)
 
 
